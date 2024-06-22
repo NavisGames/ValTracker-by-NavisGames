@@ -11,13 +11,27 @@ intervals = (
 )
 
 seasons = [
-    "E8A3", "E8A2", "E8A1",
-    "E7A3", "E7A2", "E7A1",
-    "E6A3", "E6A2", "E6A1",
-    "E5A3", "E5A2", "E5A1",
-    "E4A3", "E4A2", "E4A1",
-    "E3A3", "E3A2", "E3A1",
-    "E2A3", "E2A2", "E2A1"
+    "E8A3",
+    "E8A2",
+    "E8A1",
+    "E7A3",
+    "E7A2",
+    "E7A1",
+    "E6A3",
+    "E6A2",
+    "E6A1",
+    "E5A3",
+    "E5A2",
+    "E5A1",
+    "E4A3",
+    "E4A2",
+    "E4A1",
+    "E3A3",
+    "E3A2",
+    "E3A1",
+    "E2A3",
+    "E2A2",
+    "E2A1",
 ]
 
 ranklist = {
@@ -48,8 +62,9 @@ ranklist = {
     24: "Immortal 1",
     25: "Immortal 2",
     26: "Immortal 3",
-    27: "Radiant"
+    27: "Radiant",
 }
+
 
 def get_image(url: str):
     with http.Client() as client:
@@ -58,11 +73,13 @@ def get_image(url: str):
     img.loadFromData(r.content)
     return img
 
+
 async def get_image_async(url: str):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             img_data = await response.read()
             return QImage.fromData(img_data)
+
 
 def display_time(seconds: int, granularity=2):
     result = []
@@ -75,6 +92,7 @@ def display_time(seconds: int, granularity=2):
                 name = name.rstrip("s")
             result.append("{} {}".format(value, name))
     return " ".join(result[:granularity])
+
 
 def clear_layout(layout):
     if layout is not None:
