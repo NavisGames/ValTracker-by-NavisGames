@@ -33,7 +33,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             valorant_tracking_by_navisgames.setMaximumSize(QtCore.QSize(16777215, 16777215))
 
             # Creating Font Standards
-            QFontDatabase.addApplicationFont("Images/Tungsten-Bold.ttf")
+            QFontDatabase.addApplicationFont("Images\\Tungsten-Bold.ttf")
             font = QtGui.QFont()
             font.setFamily("Tungsten Bold")
             font.setPointSize(20)
@@ -47,7 +47,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             valorant_tracking_by_navisgames.setMouseTracking(False)
             valorant_tracking_by_navisgames.setWindowTitle("Valorant Tracking 2.4.7 By NavisGames")
             icon = QtGui.QIcon()
-            iconImage = Path(__file__).parent.joinpath("Images/icon.png")
+            iconImage = Path(__file__).parent.joinpath("Images\\icon.png")
             icon.addPixmap(
                 QtGui.QPixmap(str(iconImage)),
                 QtGui.QIcon.Normal,
@@ -108,7 +108,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.mode_switcher.setAutoFillBackground(False)
             self.mode_switcher.setText("")
             icon1 = QtGui.QIcon()
-            LightMode = Path(__file__).parent.joinpath("Images/LightMode.webp")
+            LightMode = Path(__file__).parent.joinpath("Images\\LightMode.webp")
             icon1.addPixmap(
                 QtGui.QPixmap(str(LightMode)),
                 QtGui.QIcon.Normal,
@@ -231,7 +231,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.horizontalLayout_2.setObjectName("horizontalLayout_2")
 
             # Create player Banner PixMap
-            example_banner = Path(__file__).parent.joinpath("Images/Example/ExampleWideBanner.png")
+            example_banner = Path(__file__).parent.joinpath("Images\\Example\\ExampleWideBanner.png")
             self.player_banner = QtWidgets.QLabel(self.player_information)
             self.player_banner.setEnabled(True)
             self.player_banner.setLineWidth(1)
@@ -327,7 +327,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.horizontalLayout_9.setObjectName("horizontalLayout_9")
 
             # Creating Accuracy Pixmap
-            Basic = Path(__file__).parent.joinpath("Images/Dummy/Basic.png")
+            Basic = Path(__file__).parent.joinpath("Images\\Dummy\\Basic.png")
             self.accuracy_logo = QtWidgets.QLabel(self.g_stats)
             self.accuracy_logo.setLayoutDirection(QtCore.Qt.LeftToRight)
             self.accuracy_logo.setText("")
@@ -1049,10 +1049,10 @@ class Ui_ValorantTrackerByNavisGames(object):
             match_history = "".join(match_history)
 
             # Dummys
-            headshot_dummy = Path(__file__).parent.joinpath("Images/Dummy/Headshot.png")
-            bodyshot_dummy = Path(__file__).parent.joinpath("Images/Dummy/Bodyshot.png")
-            legshot_dummy = Path(__file__).parent.joinpath("Images/Dummy/Legshot.png")
-            basic_dummy = Path(__file__).parent.joinpath("Images/Dummy/Basic.png")
+            headshot_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Headshot.png")
+            bodyshot_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Bodyshot.png")
+            legshot_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Legshot.png")
+            basic_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Basic.png")
 
             # Set Rates with Math
             if self.player_gamemode.currentText() != "DEATHMATCH":
@@ -1138,10 +1138,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                 pass
 
             # Get API
-            if season == "e8a3":
-                leaderboard = valo_api.get_leaderboard(version="v2", region=region)
-            else:
-                leaderboard = valo_api.get_leaderboard(version="v2", region=region, season_id=season)
+            leaderboard = valo_api.get_leaderboard(version="v2", region=region, season_id=season)
 
             # Set all new leaderboard stuff
             for i, x in enumerate(leaderboard.players):
@@ -1156,7 +1153,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                         self.leaderboard_player_layout[i].setObjectName("PlayerLayoutTemplate")
 
                         # Setting Banner
-                        example_banner = Path(__file__).parent.joinpath("Images/Example/example_banner.png")
+                        example_banner = Path(__file__).parent.joinpath("Images\\Example\\Example_banner.png")
                         self.leaderboard_player_banner[i] = QtWidgets.QLabel(self.leaderboard_player[i])
                         self.leaderboard_player_banner[i].setText("")
                         self.leaderboard_player_banner[i].setPixmap(QtGui.QPixmap(str(example_banner)))
@@ -1258,8 +1255,8 @@ class Ui_ValorantTrackerByNavisGames(object):
     def reset_information(self):
         try:
             tier_icon = Path(__file__).parent.joinpath("Images\\Example\\ExampleRank.png")
-            example_banner = Path(__file__).parent.joinpath("Images/Example/ExampleWideBanner.png")
-            basic_dummy = Path(__file__).parent.joinpath("Images/Dummy/Basic.png")
+            example_banner = Path(__file__).parent.joinpath("Images\\Example\\ExampleWideBanner.png")
+            basic_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Basic.png")
             self.player_name.setText("")
             self.player_name.setPlaceholderText("PLAYER NAME (16 characters)")
             self.player_tag.setText("")
@@ -1303,8 +1300,8 @@ class Ui_ValorantTrackerByNavisGames(object):
             print(traceback.format_exc())
 
     def modeSwitch(self):
-        LightMode = Path(__file__).parent.joinpath("Images/LightMode.webp")
-        DarkMode = Path(__file__).parent.joinpath("Images/DarkMode.webp")
+        LightMode = Path(__file__).parent.joinpath("Images\\LightMode.webp")
+        DarkMode = Path(__file__).parent.joinpath("Images\\DarkMode.webp")
         if self.dark_mode:
             self.dark_mode = False
             self.mode_switcher.setIcon(QtGui.QIcon(str(LightMode)))
