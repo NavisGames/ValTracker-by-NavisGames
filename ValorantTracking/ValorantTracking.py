@@ -11,21 +11,16 @@ import requests
 import valo_api
 from functions import (
     clear_layout,
-    current_season,
     display_time,
-    find_agent_of_player,
-    find_round_player,
-    find_stats_of_player,
-    find_team_of_player,
     get_image,
     get_image_async,
     ranklist,
+    seasons
 )
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor, QFontDatabase, QImage, QPalette, QPixmap
 from PyQt5.QtWidgets import QApplication, QMessageBox
-
 
 class Ui_ValorantTrackerByNavisGames(object):
     async def setupUi(self, valorant_tracking_by_navisgames):
@@ -269,7 +264,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.verticalLayout_5.addWidget(self.player_ids)
 
             # Creating player, Add HTML Text with AccountLevel, player#Tag and rank.
-            tier_icon = Path(__file__).parent.joinpath("Images\Example\ExampleRank.png")
+            tier_icon = Path(__file__).parent.joinpath("Images\\Example\\ExampleRank.png")
             self.player = QtWidgets.QLabel(self.player_datas)
             self.player.setEnabled(True)
             font = QtGui.QFont()
@@ -277,8 +272,8 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.player.setFont(font)
             self.player.setText(
                 f'<html><head/><body><p><span style=" font-size:29pt;">player#Tag<p'
-                f'>Account Level 0 | Iron 3 </span><img src="{tier_icon}"width="33 '
-                f'"height="33"/><span style=" font-size:20pt;"> 0rr</span></p></body></html>'
+                f'>Account Level 0 | Iron 3 </span><img src="{tier_icon}"width="32 '
+                f'"height="32"/><span style=" font-size:20pt;"> 0rr</span></p></body></html>'
             )
             self.player.setTextFormat(QtCore.Qt.RichText)
             self.player.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
@@ -312,8 +307,8 @@ class Ui_ValorantTrackerByNavisGames(object):
             font.setStrikeOut(False)
             self.stats_title.setFont(font)
             self.stats_title.setText(
-                '<html><head/><body><p><span style=" font-size:22pt;">General Stats </span><span style=" font-size:18pt; '
-                'color:#6a6a6a;">(Last 10 Matches)</span></p></body></html> '
+                '<html><head/><body><p><span style=" font-size:22pt;">GENERAL STATS</span><span style=" font-size:18pt; '
+                'color:#6a6a6a;"> (Last 10 Matches)</span></p></body></html> '
             )
             self.stats_title.setTextFormat(QtCore.Qt.RichText)
             self.stats_title.setAlignment(QtCore.Qt.AlignCenter)
@@ -416,7 +411,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                 "Competitive Wins \n"
                 "Competitive Games played \n"
                 "Previous Ranks \n"
-                "rank history\n"
+                "Rank History\n"
             )
             self.comp_history.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
             self.comp_history.setWordWrap(True)
@@ -518,40 +513,10 @@ class Ui_ValorantTrackerByNavisGames(object):
 
             # Creating Combo Box for all Acts
             self.act = QtWidgets.QComboBox(self.LeaderBoardInput)
-            self.act.setCurrentText("E7A1")
             self.act.setObjectName("act")
-            self.act.addItem("")
-            self.act.setItemText(0, "E7A1")
-            self.act.addItem("")
-            self.act.setItemText(1, "E6A3")
-            self.act.addItem("")
-            self.act.setItemText(2, "E6A2")
-            self.act.addItem("")
-            self.act.setItemText(3, "E6A1")
-            self.act.addItem("")
-            self.act.setItemText(4, "E5A3")
-            self.act.addItem("")
-            self.act.setItemText(5, "E5A2")
-            self.act.addItem("")
-            self.act.setItemText(6, "E5A1")
-            self.act.addItem("")
-            self.act.setItemText(7, "E4A3")
-            self.act.addItem("")
-            self.act.setItemText(8, "E4A2")
-            self.act.addItem("")
-            self.act.setItemText(9, "E4A1")
-            self.act.addItem("")
-            self.act.setItemText(10, "E3A3")
-            self.act.addItem("")
-            self.act.setItemText(11, "E3A2")
-            self.act.addItem("")
-            self.act.setItemText(12, "E3A1")
-            self.act.addItem("")
-            self.act.setItemText(13, "E2A3")
-            self.act.addItem("")
-            self.act.setItemText(14, "E2A2")
-            self.act.addItem("")
-            self.act.setItemText(15, "E2A1")
+            for season in seasons:
+                self.act.addItem(season)
+            self.act.setCurrentText(seasons[0])
             self.act.setEditable(True)
             self.horizontalLayout_7.addWidget(self.act)
             self.act_edit = self.act.lineEdit()
@@ -920,7 +885,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             last_rank = dict(reversed(act_ranks.items()))
             for x in last_rank:
                 try:
-                    if last_rank[x].final_rank_patched not in (None, "Unrated") and x != current_season.lower():
+                    if last_rank[x].final_rank_patched not in (None, "Unrated") and x != "e8a3".lower():
                         previous_ranks.append(
                             f"{x.upper()}: {last_rank[x].final_rank_patched} | {last_rank[x].wins} Wins - {last_rank[x].number_of_games}Game(s) played\n"
                         )
@@ -977,10 +942,10 @@ class Ui_ValorantTrackerByNavisGames(object):
                 rounds_played = match.rounds_played
 
                 # Get Stats of player with get_stats function
-                get_stats = find_stats_of_player(Details.name, players.all_players)
+                get_stats = {player.name: player.stats for player in players.all_players}.get(Details.name)
 
                 # Get Agent of player
-                get_agent = find_agent_of_player(Details.name, players.all_players)
+                get_agent = {player.name: player.character for player in players.all_players}.get(Details.name)
 
                 # Some Variables
                 kills = get_stats.kills if hasattr(get_stats, "kills") else 0
@@ -991,7 +956,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                 damage = 0
 
                 for rounds in x.rounds:
-                    player = find_round_player(f"{Details.name}#{Details.tag}", rounds.player_stats)
+                    player = {p.player_display_name: p for p in rounds.player_stats}.get(f"{Details.name}#{Details.tag}")
                     damage += player.damage if hasattr(player, "damage") else 0
                     total_rounds += 1
 
@@ -1033,7 +998,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                     kd = format(kills, ".2f")
 
                 # Get Team and Team information of player with get_team function
-                get_team = find_team_of_player(Details.name, players.all_players)
+                get_team = {p.name: p.team for p in players.all_players}.get(Details.name)
                 if get_team == "Blue":
                     get_team = teams.blue
                 else:
@@ -1150,8 +1115,8 @@ class Ui_ValorantTrackerByNavisGames(object):
                 self.stats_text.setText("")
             self.player.setText(
                 f'<html><head/><body><p><span style=" font-size:29pt;">{Details.name}#{Details.tag}<p'
-                f'>Account Level {account_level} | {rank} </span><img src="{tier_icon}"width="33 '
-                f'"height="33"/><span style=" font-size:20pt;"> {rr}rr</span></p></body></html>'
+                f'>Account Level {account_level} | {rank} </span><img src="{tier_icon}"width="32 '
+                f'"height="32"/><span style=" font-size:20pt;"> {rr}rr</span></p></body></html>'
             )
             self.home_error.setText(f"")
         except BaseException as error:
@@ -1173,7 +1138,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                 pass
 
             # Get API
-            if season == current_season:
+            if season == "e8a3":
                 leaderboard = valo_api.get_leaderboard(version="v2", region=region)
             else:
                 leaderboard = valo_api.get_leaderboard(version="v2", region=region, season_id=season)
@@ -1202,9 +1167,10 @@ class Ui_ValorantTrackerByNavisGames(object):
 
                         # Get LeaderboardPlayers rank, watching out if Episode is under 5
                         tier = x.competitiveTier
-                        if int(self.act.currentText()[1]) < 5 and tier >= 21:
+                        act_number = int(self.act.currentText()[1])
+                        if act_number < 5 and tier >= 21:
                             tier += 3
-                        rank = ranklist[tier]
+                        rank = ranklist.get(tier, "Unknown Rank")
 
                         # If anonymous else stuff
                         if x.IsAnonymized:
@@ -1291,7 +1257,7 @@ class Ui_ValorantTrackerByNavisGames(object):
 
     def reset_information(self):
         try:
-            tier_icon = Path(__file__).parent.joinpath("Images\Example\ExampleRank.png")
+            tier_icon = Path(__file__).parent.joinpath("Images\\Example\\ExampleRank.png")
             example_banner = Path(__file__).parent.joinpath("Images/Example/ExampleWideBanner.png")
             basic_dummy = Path(__file__).parent.joinpath("Images/Dummy/Basic.png")
             self.player_name.setText("")
@@ -1302,8 +1268,8 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.player_ids.setText("puu-ID | EU")
             self.player.setText(
                 f'<html><head/><body><p><span style=" font-size:29pt;">player#Tag<p'
-                f'>Account Level 0 | Iron 3 </span><img src="{tier_icon}"width="33 '
-                f'"height="33"/><span style=" font-size:20pt;"> 0rr</span></p></body></html>'
+                f'>Account Level 0 | Iron 3 </span><img src="{tier_icon}"width="32 '
+                f'"height="32"/><span style=" font-size:20pt;"> 0rr</span></p></body></html>'
             )
             self.MatchInformations.setText(
                 "Match ID\n" "Date - Match Duration\n" "region - Cluster\n" "Gamemode - Map"
