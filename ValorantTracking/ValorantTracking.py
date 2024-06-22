@@ -887,7 +887,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                 try:
                     if last_rank[x].final_rank_patched not in (None, "Unrated") and x != "e8a3".lower():
                         previous_ranks.append(
-                            f"{x.upper()}: {last_rank[x].final_rank_patched} | {last_rank[x].wins} Wins - {last_rank[x].number_of_games}Game(s) played\n"
+                            f"{x.upper()}: {last_rank[x].final_rank_patched} | {last_rank[x].wins} Wins - {last_rank[x].number_of_games} Game(s) played\n"
                         )
                     else:
                         continue
