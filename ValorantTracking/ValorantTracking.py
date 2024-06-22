@@ -58,7 +58,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             valorant_tracking_by_navisgames.setFont(font)
             valorant_tracking_by_navisgames.setMouseTracking(False)
             valorant_tracking_by_navisgames.setWindowTitle(
-                "Valorant Tracking 2.4.7 By NavisGames"
+                "Valorant Tracking 2.4 By NavisGames"
             )
             icon = QtGui.QIcon()
             iconImage = Path(__file__).parent.joinpath("Images\\icon.png")
