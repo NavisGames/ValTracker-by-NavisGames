@@ -1,5 +1,5 @@
 aiohttp==3.9.5
 httpx==0.24.1
-PyQt5==5.15.9
+PyQt5==5.15.10
 requests==2.32.3
 valo_api==2.0.6
