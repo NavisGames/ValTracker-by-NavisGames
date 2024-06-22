@@ -52,7 +52,7 @@ A: Just open an issue :) I'll take a look when I have time
 
 HUGE, HUGE credit goes to @Henrik-3 for creating an UNOFFICIAL VALORANT API that you can use to create this
 things I've Made Too! https://github.com/Henrik-3/unofficial-valorant-api
-Thanks, Henrik; I couldn't do without this project <3
+Thanks, Henrik; I couldn't do this project without your API <3
 
 The Python wrapper I use for the unofficial Valorant API is https://github.com/raimannma/ValorantAPI made by @raimannma
 
