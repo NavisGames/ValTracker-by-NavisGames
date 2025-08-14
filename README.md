@@ -2,21 +2,21 @@
 
 [![API](https://img.shields.io/badge/API-valo--api-red)](https://github.com/Henrik-3/unofficial-valorant-api)
 [![code style](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
-  
-[![Dependencies](https://img.shields.io/librariesio/github/NavisGames/Valorant-Tracking-by-NavisGames?logo=Github)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/pulls)
-[![Latest Commit](https://img.shields.io/github/last-commit/NavisGames/Valorant-Tracking-by-NavisGames/main?logo=Github)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/tree/main)
-  
-[![Most used Language](https://img.shields.io/github/languages/top/NavisGames/Valorant-Tracking-by-NavisGames)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames)
-[![LICENSE](https://img.shields.io/github/license/NavisGames/Valorant-Tracking-by-NavisGames)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/blob/main/LICENSE)
-[![Downloads](https://img.shields.io/github/downloads/NavisGames/Valorant-Tracking-by-NavisGames/total)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/releases)
 
-[![Stars](https://img.shields.io/github/stars/NavisGames/Valorant-Tracking-by-NavisGames?logo=Github)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/stargazers)
-[![Issues](https://img.shields.io/github/issues-raw/NavisGames/Valorant-Tracking-by-NavisGames?logo=Github)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr-raw/NavisGames/Valorant-Tracking-by-NavisGames?logo=Github)](https://github.com/NavisGames/Valorant-Tracking-by-NavisGames/pulls)
-  
+[![Dependencies](https://img.shields.io/librariesio/github/NavisGames/ValTracker?logo=Github)](https://github.com/NavisGames/ValTracker/pulls)
+[![Latest Commit](https://img.shields.io/github/last-commit/NavisGames/ValTracker/main?logo=Github)](https://github.com/NavisGames/ValTracker/tree/main)
+
+[![Most used Language](https://img.shields.io/github/languages/top/NavisGames/ValTracker)](https://github.com/NavisGames/ValTracker)
+[![LICENSE](https://img.shields.io/github/license/NavisGames/ValTracker)](https://github.com/NavisGames/ValTracker/blob/main/LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/NavisGames/ValTracker/total)](https://github.com/NavisGames/ValTracker/releases)
+
+[![Stars](https://img.shields.io/github/stars/NavisGames/ValTracker?logo=Github)](https://github.com/NavisGames/ValTracker/stargazers)
+[![Issues](https://img.shields.io/github/issues-raw/NavisGames/ValTracker?logo=Github)](https://github.com/NavisGames/ValTracker/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr-raw/NavisGames/ValTracker?logo=Github)](https://github.com/NavisGames/ValTracker/pulls)
+
 </div>
 
-# Valorant Tracking by NavisGames
+# ValTracker - Personal Valorant Tracker by NavisGames
 
 Want to track your enemies ranks but forgot to open Valorant Tracker or Blitz?
 Use this Valorant tracker made with Python and PYQT to check stats very quickly!
@@ -28,7 +28,7 @@ Use this Valorant tracker made with Python and PYQT to check stats very quickly!
 - See his last games
 - See how much RR he made
 - See accuracy, win rate and average K.D and other stuff from recent games
-- Check out the global leaderboards of *almost* every act in every region
+- Check out the global leaderboards of _almost_ every act in every region
 - View current in-game bundles, including skins, their prices and how long they will remain in the store.
 
 And many more functions!
