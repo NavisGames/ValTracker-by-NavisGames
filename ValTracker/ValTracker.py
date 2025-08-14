@@ -19,8 +19,8 @@ from functions import (
     download_agent_images,
     get_image,
     get_image_async,
+    get_ranks,
     populate_combo_box,
-    ranklist,
     regions,
     seasons,
 )
@@ -708,6 +708,12 @@ class Ui_ValorantTrackerByNavisGames(object):
             )
 
             # Creating leaderboard Tab & Layout
+            self.leaderboard_player = {}
+            self.leaderboard_player_layout = {}
+            self.leaderboard_player_banner = {}
+            self.leaderboard_player_information = {}
+            self.leaderboard_player_spacer = {}
+
             self.leaderboard = QtWidgets.QWidget()
             self.leaderboard.setObjectName("leaderboard")
             self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.leaderboard)
@@ -1677,6 +1683,8 @@ class Ui_ValorantTrackerByNavisGames(object):
 
                         # Get LeaderboardPlayers rank, watching out if Episode is under 5
                         tier = x.competitiveTier
+                        ranklist = get_ranks()
+                        print(ranklist)
                         rank = ranklist.get(
                             tier,
                             "Unknown Rank",

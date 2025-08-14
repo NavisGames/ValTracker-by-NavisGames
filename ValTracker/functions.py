@@ -44,40 +44,26 @@ seasons = {
     "E2A3": "e2a3",
     "E2A2": "e2a2",
     "E2A1": "e2a1",
-}
-
-ranklist = {
-    0: "Unranked",
-    1: "Unused 1",
-    2: "Unused 2",
-    3: "Iron 1",
-    4: "Iron 2",
-    5: "Iron 3",
-    6: "Bronze 1",
-    7: "Bronze 2",
-    8: "Bronze 3",
-    9: "Silver 1",
-    10: "Silver 2",
-    11: "Silver 3",
-    12: "Gold 1",
-    13: "Gold 2",
-    14: "Gold 3",
-    15: "Platinum 1",
-    16: "Platinum 2",
-    17: "Platinum 3",
-    18: "Diamond 1",
-    19: "Diamond 2",
-    20: "Diamond 3",
-    21: "Ascendant 1",
-    22: "Ascendant 2",
-    23: "Ascendant 3",
-    24: "Immortal 1",
-    25: "Immortal 2",
-    26: "Immortal 3",
-    27: "Radiant",
-}
+}  # Problem: Hardcoded seasons, need to update manually, finding a way to get the current season automatically would be better
 
 regions = ["EU", "NA", "KR", "AP", "LATAM", "BR"]
+
+
+def get_ranks() -> dict:
+    """
+    Returns a dictionary of ranks with their corresponding tier numbers by api.
+    """
+    try:
+        response = requests.get("https://valorant-api.com/v1/competitivetiers")
+        response.raise_for_status()
+        data = response.json()
+        ranklist = {
+            tier["tier"]: tier["tierName"] for tier in data["data"][0]["tiers"]
+        }
+        return ranklist
+    except requests.RequestException as e:
+        logging.error(f"Error fetching ranks: {e}")
+        return None
 
 
 def populate_combo_box(combo_box, items):
