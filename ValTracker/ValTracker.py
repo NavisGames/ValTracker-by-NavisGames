@@ -952,7 +952,13 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.tabs_right.setObjectName("TabsRight")
 
             # Create Dicts with Bundles and use Valorant API to get all current bundles
-            current_Bundle = valo_api.get_store_featured_v2()
+            try:
+                current_Bundle = valo_api.get_store_featured_v2()
+            except Exception as e:
+                self.home_error.setText(
+                    f"<span style='color:red;'>Error fetching bundles: {e}</span>"
+                )
+                current_Bundle = []
             self.bundle = dict()
 
             for (

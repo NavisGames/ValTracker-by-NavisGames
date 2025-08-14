@@ -16,6 +16,8 @@ intervals = (
 )
 
 seasons = {
+    # "V25A4": "e10a4",
+    "V25A3": "e10a3",
     "V25A2": "e10a2",
     "V25A1": "e10a1",
     "E9A3": "e9a3",
