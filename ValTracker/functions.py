@@ -170,9 +170,6 @@ def download_agent_images() -> None:
 
                 agent_image_path = agents_folder.joinpath(f"{agent_name}.png")
                 if agent_image_path.exists():
-                    logging.info(
-                        f"Image already exists for agent: {agent_name}"
-                    )
                     continue
                 img_response = session.get(agent_image_url, timeout=10)
                 img_response.raise_for_status()

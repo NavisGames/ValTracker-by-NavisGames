@@ -970,8 +970,8 @@ class Ui_ValorantTrackerByNavisGames(object):
                 bundleUuid = current_Bundle[i].bundle_uuid
 
                 # Getting Bundle Banner as PixMap
-                bundleJson = requests.get(
-                    url=f"https://valorant-api.com/v1/bundles/{bundleUuid}"
+                bundleJson = fetch_url(
+                    f"https://valorant-api.com/v1/bundles/{bundleUuid}"
                 ).json()
                 img = await get_image_async(bundleJson["data"]["displayIcon2"])
 
@@ -1198,7 +1198,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             region = Details.region
             account_level = Details.account_level
             card_id = Details.card
-            card_data = requests.get(
+            card_data = fetch_url(
                 f"https://valorant-api.com/v1/playercards/{card_id}"
             ).json()
             card = card_data["data"]["wideArt"]
@@ -1545,7 +1545,7 @@ class Ui_ValorantTrackerByNavisGames(object):
 
             # Gets the current rank AS TIER INDEX (int) and compares it with the index data, to get the RANK IMAGE
             tier_index = RankDetails.current_data.currenttier
-            data = requests.get(
+            data = fetch_url(
                 "https://valorant-api.com/v1/competitivetiers"
             ).json()
             tiers = data["data"][-1]["tiers"]
