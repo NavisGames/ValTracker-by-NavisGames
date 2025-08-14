@@ -8,10 +8,8 @@ import os
 import sys
 import time
 import traceback
-from logging.config import ConvertingTuple
 from pathlib import Path
 
-import requests
 import valo_api
 from dotenv import load_dotenv
 
