@@ -1684,7 +1684,6 @@ class Ui_ValorantTrackerByNavisGames(object):
                         # Get LeaderboardPlayers rank, watching out if Episode is under 5
                         tier = x.competitiveTier
                         ranklist = get_ranks()
-                        print(ranklist)
                         rank = ranklist.get(
                             tier,
                             "Unknown Rank",
