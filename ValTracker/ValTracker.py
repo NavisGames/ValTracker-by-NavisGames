@@ -708,12 +708,6 @@ class Ui_ValorantTrackerByNavisGames(object):
             )
 
             # Creating leaderboard Tab & Layout
-            self.leaderboard_player = {}
-            self.leaderboard_player_layout = {}
-            self.leaderboard_player_banner = {}
-            self.leaderboard_player_information = {}
-            self.leaderboard_player_spacer = {}
-
             self.leaderboard = QtWidgets.QWidget()
             self.leaderboard.setObjectName("leaderboard")
             self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.leaderboard)
@@ -1605,6 +1599,13 @@ class Ui_ValorantTrackerByNavisGames(object):
         """
         Fetch and display leaderboard information.
         """
+        # Clear previous leaderboard data
+        self.leaderboard_player = {}
+        self.leaderboard_player_layout = {}
+        self.leaderboard_player_banner = {}
+        self.leaderboard_player_information = {}
+        self.leaderboard_player_spacer = {}
+
         self.clear_errors()
         self.update_loading_bar(10)  # Update loading bar to 10%
         start_time = time.time()
