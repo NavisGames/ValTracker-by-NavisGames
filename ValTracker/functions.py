@@ -1,5 +1,6 @@
 import logging
 import traceback
+from functools import lru_cache
 from pathlib import Path
 
 import aiohttp
@@ -49,21 +50,24 @@ seasons = {
 regions = ["EU", "NA", "KR", "AP", "LATAM", "BR"]
 
 
+@lru_cache(maxsize=1)
 def get_ranks() -> dict:
     """
-    Returns a dictionary of ranks with their corresponding tier numbers by api.
+    Returns a dict of {tier_number: tier_name} from the API.
+    Cached to avoid repeated requests.
     """
     try:
-        response = requests.get("https://valorant-api.com/v1/competitivetiers")
-        response.raise_for_status()
-        data = response.json()
-        ranklist = {
-            tier["tier"]: tier["tierName"] for tier in data["data"][0]["tiers"]
-        }
-        return ranklist
+        resp = requests.get(
+            "https://valorant-api.com/v1/competitivetiers", timeout=10
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        # Defensive: prüfe Struktur
+        tiers = (data.get("data") or [{}])[0].get("tiers") or []
+        return {t.get("tier"): t.get("tierName") for t in tiers if "tier" in t}
     except requests.RequestException as e:
         logging.error(f"Error fetching ranks: {e}")
-        return None
+        return {}  # <- nie None
 
 
 def populate_combo_box(combo_box, items):
@@ -140,25 +144,50 @@ def humanize_agent_name(agent_name: str) -> str:
 def download_agent_images() -> None:
     """
     Download all agent images from valorant-api.com and save them in the Images/Agents folder.
+    Skips images that already exist.
     """
     try:
-        agents_data = requests.get("https://valorant-api.com/v1/agents").json()
-        agents = agents_data["data"]
+        # Holen der Agenten-Daten von der API
+        response = requests.get(
+            "https://valorant-api.com/v1/agents", timeout=10
+        )
+        response.raise_for_status()
+        agents_data = response.json()
+        agents = agents_data.get("data", [])
+
         agents_folder = Path(__file__).parent.joinpath("Images/Agents")
         agents_folder.mkdir(parents=True, exist_ok=True)
 
-        for agent in agents:
-            agent_name = humanize_agent_name(agent["displayName"])
-            agent_image_url = agent["displayIcon"]
-            agent_image_path = agents_folder.joinpath(f"{agent_name}.png")
+        with requests.Session() as session:
+            for agent in agents:
+                agent_name = humanize_agent_name(
+                    agent.get("displayName", "unknown")
+                )
+                agent_image_url = agent.get("displayIcon")
+                if not agent_image_url:
+                    logging.warning(f"No image found for agent {agent_name}")
+                    continue
 
-            if not agent_image_path.exists():
-                response = requests.get(agent_image_url)
+                agent_image_path = agents_folder.joinpath(f"{agent_name}.png")
+                if agent_image_path.exists():
+                    logging.info(
+                        f"Image already exists for agent: {agent_name}"
+                    )
+                    continue
+                img_response = session.get(agent_image_url, timeout=10)
+                img_response.raise_for_status()
                 with open(agent_image_path, "wb") as file:
-                    file.write(response.content)
+                    file.write(img_response.content)
                 logging.info(f"Downloaded image for agent: {agent_name}")
 
+    except requests.RequestException as e:
+        logging.error(f"Error downloading agent images: {e}")
     except Exception as error:
-        logging.error(
-            f"Error downloading agent images: {traceback.format_exc()}"
-        )
+        logging.error(f"Unexpected error: {traceback.format_exc()}")
+
+
+def fetch_url(url: str):
+    """
+    Fetch data from a URL with a timeout.
+    """
+    return requests.get(url, timeout=10)

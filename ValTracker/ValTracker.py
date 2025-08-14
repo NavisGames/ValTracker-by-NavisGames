@@ -7,6 +7,7 @@ import logging
 import sys
 import time
 import traceback
+from logging.config import ConvertingTuple
 from pathlib import Path
 
 import requests
@@ -17,6 +18,7 @@ from functions import (
     clear_layout,
     display_time,
     download_agent_images,
+    fetch_url,
     get_image,
     get_image_async,
     get_ranks,
@@ -1731,7 +1733,7 @@ class Ui_ValorantTrackerByNavisGames(object):
                         player_cards[i] = player_card
 
                     except AttributeError:
-                        break
+                        continue
                 else:
                     break
 
@@ -1744,17 +1746,21 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.verticalLayout_8.addItem(self.leaderboard_spacer)
 
             # Get & Set Banner
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                image = executor.map(
-                    requests.get,
-                    player_cards.values(),
+            items = list(player_cards.items())  # [(idx, url), ...]
+            with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
+                responses = list(
+                    ex.map(lambda pair: fetch_url(pair[1]), items)
                 )
-                image = tuple(image)
 
-            for _ in player_cards:
+            for (idx, _url), resp in zip(items, responses):
+                if not resp or not resp.ok:
+                    logging.warning(
+                        f"Image fetch failed for idx={idx} url={_url} status={getattr(resp, 'status_code', 'n/a')}"
+                    )
+                    continue
                 img = QImage()
-                img.loadFromData(image[_].content)
-                self.leaderboard_player_banner[_].setPixmap(QPixmap(img))
+                img.loadFromData(resp.content)
+                self.leaderboard_player_banner[idx].setPixmap(QPixmap(img))
 
             logging.info(
                 f"LEADERBOARD took --- {time.time() - start_time} seconds ---"
