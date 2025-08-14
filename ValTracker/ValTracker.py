@@ -4,6 +4,7 @@
 import asyncio
 import concurrent.futures
 import logging
+import os
 import sys
 import time
 import traceback
@@ -12,8 +13,12 @@ from pathlib import Path
 
 import requests
 import valo_api
+from dotenv import load_dotenv
 
-valo_api.set_api_key("HDEV-e6c002ce-3c53-4464-9586-c58c586baf1c")
+load_dotenv()
+
+valo_api.set_api_key(os.getenv("VALO_API_KEY"))
+
 from functions import (
     clear_layout,
     display_time,
@@ -2098,4 +2103,5 @@ async def main() -> None:
 
 
 if __name__ == "__main__":
+    asyncio.run(main())
     asyncio.run(main())
