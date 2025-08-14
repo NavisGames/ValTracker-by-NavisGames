@@ -1,5 +1,13 @@
-# Credits for this program go to NavisGames, selling this program or saying it's yours is not allowed! Read the
-# license for more. If you want, please fork this program to share what you changed in this program ^^
+# -----------------------------------------------------------
+# ValTracker by NavisGames
+# -----------------------------------------------------------
+# This application provides player statistics, match history,
+# and leaderboard information for Valorant using the valo_api.
+# Selling this application is not allowed.
+# Read the LICENSE file for more information.
+# If you want to fork this program, share what you changed ^^
+# -----------------------------------------------------------
+
 
 import asyncio
 import concurrent.futures
