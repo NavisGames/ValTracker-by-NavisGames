@@ -6,7 +6,7 @@ These are the current versions supported with security updates:
 
 | Version | Supported  |
 | ------- | ---------- |
-| 1.0.x   | :question: |
+| 0.1.x   | :question: |
 
 :white_check_mark: means the version is safe and there shouldn't be any problems!
 
