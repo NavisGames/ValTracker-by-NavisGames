@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-valo_api.set_api_key(os.getenv("VALO_API_KEY"))
+valo_api.set_api_key(os.getenv("VALO_API_KEY"))  # Safety
 
 from functions import (
     clear_layout,
