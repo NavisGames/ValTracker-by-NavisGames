@@ -1184,7 +1184,7 @@ class Ui_ValorantTrackerByNavisGames(object):
         start_time = time.time()
         try:
             # Get Values
-            season = self.act.currentText().lower()
+            season = self.act.currentText()
             region = self.leaderboard_region.currentText()
             player_limit = int(self.player_count.value())
             player_cards = {}
@@ -1198,7 +1198,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             leaderboard = valo_api.get_leaderboard(
                 version="v2",
                 region=region,
-                season_id=season,
+                season=seasons[season],
             )
 
             self.update_loading_bar(50)  # Update loading bar to 50%

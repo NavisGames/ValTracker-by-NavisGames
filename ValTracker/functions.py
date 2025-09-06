@@ -17,7 +17,9 @@ intervals = (
 )
 
 seasons = {
-    # "V25A4": "e10a4",
+    # "V25A6": "e10a6",
+    # "V25A5": "e10a5",
+    "V25A4": "e10a4",
     "V25A3": "e10a3",
     "V25A2": "e10a2",
     "V25A1": "e10a1",
@@ -57,9 +59,7 @@ def get_ranks() -> dict:
     Cached to avoid repeated requests.
     """
     try:
-        resp = requests.get(
-            "https://valorant-api.com/v1/competitivetiers", timeout=10
-        )
+        resp = requests.get("https://valorant-api.com/v1/competitivetiers", timeout=10)
         resp.raise_for_status()
         data = resp.json()
         # Defensive: prüfe Struktur
@@ -148,9 +148,7 @@ def download_agent_images() -> None:
     """
     try:
         # Holen der Agenten-Daten von der API
-        response = requests.get(
-            "https://valorant-api.com/v1/agents", timeout=10
-        )
+        response = requests.get("https://valorant-api.com/v1/agents", timeout=10)
         response.raise_for_status()
         agents_data = response.json()
         agents = agents_data.get("data", [])
@@ -160,9 +158,7 @@ def download_agent_images() -> None:
 
         with requests.Session() as session:
             for agent in agents:
-                agent_name = humanize_agent_name(
-                    agent.get("displayName", "unknown")
-                )
+                agent_name = humanize_agent_name(agent.get("displayName", "unknown"))
                 agent_image_url = agent.get("displayIcon")
                 if not agent_image_url:
                     logging.warning(f"No image found for agent {agent_name}")
