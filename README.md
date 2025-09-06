@@ -3,7 +3,6 @@
 [![API](https://img.shields.io/badge/API-valo--api-red)](https://github.com/Henrik-3/unofficial-valorant-api)
 [![code style](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
 
-[![Dependencies](https://img.shields.io/librariesio/github/NavisGames/ValTracker-by-NavisGames?logo=Github)](https://github.com/NavisGames/ValTracker-by-NavisGames/pulls)
 [![Latest Commit](https://img.shields.io/github/last-commit/NavisGames/ValTracker-by-NavisGames/main?logo=Github)](https://github.com/NavisGames/ValTracker-by-NavisGames/tree/main)
 
 [![Most used Language](https://img.shields.io/github/languages/top/NavisGames/ValTracker-by-NavisGames)](https://github.com/NavisGames/ValTracker-by-NavisGames)
