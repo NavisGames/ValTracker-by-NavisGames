@@ -54,41 +54,35 @@ class Ui_ValorantTrackerByNavisGames(object):
         Set up the UI for the Valorant Tracker application.
         """
         try:
-            # Creating MainWindow
+            # ---------------------------------------------------------
+            # MainWindow Setup
+            # ---------------------------------------------------------
             self.dark_mode = False
             valtracker.setObjectName("valtracker")
             valtracker.setEnabled(True)
-            valtracker.resize(
-                1049,
-                890,
-            )
-            valtracker.setMaximumSize(
-                QtCore.QSize(
-                    16777215,
-                    16777215,
-                )
-            )
+            valtracker.resize(1049, 890)
+            valtracker.setMaximumSize(QtCore.QSize(16777215, 16777215))
 
-            # Creating Font Standards
+            # ---------------------------------------------------------
+            # Global Font Setup
+            # ---------------------------------------------------------
             QFontDatabase.addApplicationFont("Images\\Tungsten-Bold.ttf")
             font = QtGui.QFont()
             font.setFamily("Tungsten Bold")
             font.setPointSize(20)
-            font.setBold(False)
-            font.setItalic(False)
             font.setWeight(50)
             font.setKerning(True)
 
-            # Set Font, WindowTitle and Icon
+            # Window Settings
             valtracker.setFont(font)
             valtracker.setMouseTracking(False)
             valtracker.setWindowTitle("ValTracker - NavisGames")
+
+            # Window Icon
             icon = QtGui.QIcon()
             iconImage = Path(__file__).parent.joinpath("Images\\icon.png")
             icon.addPixmap(
-                QtGui.QPixmap(str(iconImage)),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.Off,
+                QtGui.QPixmap(str(iconImage)), QtGui.QIcon.Normal, QtGui.QIcon.Off
             )
             valtracker.setWindowIcon(icon)
             valtracker.setDockOptions(
@@ -96,204 +90,110 @@ class Ui_ValorantTrackerByNavisGames(object):
                 | QtWidgets.QMainWindow.AnimatedDocks
             )
 
-            # Create CENTRAL WIDGET
+            # ---------------------------------------------------------
+            # Central Widget & Main Layout
+            # ---------------------------------------------------------
             self.centralwidget = QtWidgets.QWidget(valtracker)
             self.centralwidget.setObjectName("centralwidget")
 
-            # Create Layout for WIDGET
-            self.horizontalLayout_main = QtWidgets.QHBoxLayout(
-                self.centralwidget
-            )
-            self.horizontalLayout_main.setContentsMargins(
-                10,
-                10,
-                10,
-                10,
-            )
+            self.horizontalLayout_main = QtWidgets.QHBoxLayout(self.centralwidget)
+            self.horizontalLayout_main.setContentsMargins(10, 10, 10, 10)
             self.horizontalLayout_main.setSpacing(10)
             self.horizontalLayout_main.setObjectName("horizontalLayout_main")
 
-            # Creating Tabs for left side
+            # ---------------------------------------------------------
+            # Left Tabs (Home, Leaderboard, Match, ...)
+            # ---------------------------------------------------------
             self.tabs_left = QtWidgets.QTabWidget(self.centralwidget)
             self.tabs_left.setEnabled(True)
             self.tabs_left.setFocusPolicy(QtCore.Qt.NoFocus)
             self.tabs_left.setLayoutDirection(QtCore.Qt.LeftToRight)
             self.tabs_left.setTabPosition(QtWidgets.QTabWidget.North)
             self.tabs_left.setTabShape(QtWidgets.QTabWidget.Rounded)
-            self.tabs_left.setElideMode(QtCore.Qt.ElideNone)
             self.tabs_left.setUsesScrollButtons(False)
-            self.tabs_left.setDocumentMode(False)
             self.tabs_left.setTabsClosable(False)
             self.tabs_left.setMovable(False)
-            self.tabs_left.setTabBarAutoHide(False)
             self.tabs_left.setObjectName("TabsLeft")
 
-            # Creating Home Tab
+            # ---------------------------------------------------------
+            # HOME TAB
+            # ---------------------------------------------------------
             self.home = QtWidgets.QWidget()
             self.home.setObjectName("Home")
             self.verticalLayout = QtWidgets.QVBoxLayout(self.home)
-
-            # Creating Home Layout
             self.verticalLayout.setObjectName("verticalLayout")
 
-            # Creating player Input Frame
+            # ---------------------------------------------------------
+            # Player Input Section
+            # ---------------------------------------------------------
             self.player_input = QtWidgets.QFrame(self.home)
-            self.player_input.setEnabled(True)
-            self.player_input.setLineWidth(0)
             self.player_input.setObjectName("player_input")
-
-            # Creating player Input Layout
             self.horizontalLayout = QtWidgets.QHBoxLayout(self.player_input)
-            self.horizontalLayout.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
+            self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
             self.horizontalLayout.setSpacing(5)
             self.horizontalLayout.setObjectName("horizontalLayout")
 
-            # Light / Dark-mode switcher
+            # Light / Dark Mode Switcher
             self.mode_switcher = QtWidgets.QPushButton(self.player_input)
-            self.mode_switcher.setAutoFillBackground(False)
-            self.mode_switcher.setText("")
             self.mode_switcher.setToolTip("Switch between light and dark mode")
             icon1 = QtGui.QIcon()
-            LightMode = Path(__file__).parent.joinpath(
-                "Images\\LightMode.webp"
-            )
+            LightMode = Path(__file__).parent.joinpath("Images\\LightMode.webp")
             icon1.addPixmap(
-                QtGui.QPixmap(str(LightMode)),
-                QtGui.QIcon.Normal,
-                QtGui.QIcon.Off,
+                QtGui.QPixmap(str(LightMode)), QtGui.QIcon.Normal, QtGui.QIcon.Off
             )
             self.mode_switcher.setIcon(icon1)
-            self.mode_switcher.setIconSize(
-                QtCore.QSize(
-                    32,
-                    32,
-                )
-            )
-            self.mode_switcher.setAutoDefault(False)
-            self.mode_switcher.setDefault(False)
-            self.mode_switcher.setFlat(False)
+            self.mode_switcher.setIconSize(QtCore.QSize(32, 32))
             self.mode_switcher.setObjectName("mode_switcher")
             self.horizontalLayout.addWidget(self.mode_switcher)
 
-            # Create player Name Input
+            # Player Name Input
             self.player_name = QtWidgets.QLineEdit(self.player_input)
-            self.player_name.setEnabled(True)
-            self.player_name.setToolTip(
-                "Enter your player name (max 16 characters)"
-            )
-            self.player_name.setToolTipDuration(-7)
-            self.player_name.setInputMask("")
-            self.player_name.setText("")
+            self.player_name.setToolTip("Enter your player name (max 16 characters)")
             self.player_name.setMaxLength(16)
             self.player_name.setAlignment(QtCore.Qt.AlignCenter)
             self.player_name.setPlaceholderText("PLAYER NAME (16 characters)")
             self.player_name.setObjectName("player_name")
             self.horizontalLayout.addWidget(self.player_name)
 
-            # Create player Tag Input
+            # Player Tag Input
             self.player_tag = QtWidgets.QLineEdit(self.player_input)
-            self.player_tag.setEnabled(True)
-            self.player_tag.setToolTip(
-                "Enter your player tag (max 5 characters)"
-            )
-            self.player_tag.setInputMask("")
-            self.player_tag.setText("")
+            self.player_tag.setToolTip("Enter your player tag (max 5 characters)")
             self.player_tag.setMaxLength(5)
             self.player_tag.setAlignment(QtCore.Qt.AlignCenter)
             self.player_tag.setPlaceholderText("PLAYER TAG (5 characters)")
             self.player_tag.setObjectName("player_tag")
             self.horizontalLayout.addWidget(self.player_tag)
 
-            # Create player region Input
+            # Player Region Dropdown
             self.player_region = QtWidgets.QComboBox(self.player_input)
-            self.player_region.setEnabled(True)
             self.player_region.setToolTip("Select your region")
-            self.player_region.setLayoutDirection(QtCore.Qt.LeftToRight)
             self.player_region.setCurrentText("EU")
             self.player_region.setMaxVisibleItems(6)
-            self.player_region.setMaxCount(6)
             self.player_region.setDuplicatesEnabled(False)
             self.player_region.setObjectName("player_region")
-            self.player_region.addItem("")
-            self.player_region.setItemText(
-                0,
-                "EU",
-            )
-            self.player_region.addItem("")
-            self.player_region.setItemText(
-                1,
-                "NA",
-            )
-            self.player_region.addItem("")
-            self.player_region.setItemText(
-                2,
-                "KR",
-            )
-            self.player_region.addItem("")
-            self.player_region.setItemText(
-                3,
-                "AP",
-            )
-            self.player_region.addItem("")
-            self.player_region.setItemText(
-                4,
-                "LATAM",
-            )
-            self.player_region.addItem("")
-            self.player_region.setItemText(
-                5,
-                "BR",
-            )
+            self.player_region.addItems(["EU", "NA", "KR", "AP", "LATAM", "BR"])
             self.player_region.setEditable(True)
             self.PlayerRegionEdit = self.player_region.lineEdit()
             self.PlayerRegionEdit.setAlignment(Qt.AlignCenter)
             self.PlayerRegionEdit.setReadOnly(True)
             self.horizontalLayout.addWidget(self.player_region)
 
-            # Create player Gamemode Input
+            # Player Gamemode Dropdown
             self.player_gamemode = QtWidgets.QComboBox(self.player_input)
-            self.player_gamemode.setEnabled(True)
             self.player_gamemode.setToolTip("Select the game mode")
-            self.player_gamemode.setLayoutDirection(QtCore.Qt.LeftToRight)
             self.player_gamemode.setCurrentText("ALL")
             self.player_gamemode.setMaxVisibleItems(6)
-            self.player_gamemode.setMaxCount(6)
             self.player_gamemode.setDuplicatesEnabled(False)
             self.player_gamemode.setObjectName("player_gamemode")
-            self.player_gamemode.addItem("")
-            self.player_gamemode.setItemText(
-                0,
-                "ALL",
-            )
-            self.player_gamemode.addItem("")
-            self.player_gamemode.setItemText(
-                1,
-                "COMPETITIVE",
-            )
-            self.player_gamemode.addItem("")
-            self.player_gamemode.setItemText(
-                2,
-                "UNRATED",
-            )
-            self.player_gamemode.addItem("")
-            self.player_gamemode.setItemText(
-                3,
-                "SPIKERUSH",
-            )
-            self.player_gamemode.addItem("")
-            self.player_gamemode.setItemText(
-                4,
-                "SWIFTPLAY",
-            )
-            self.player_gamemode.addItem("")
-            self.player_gamemode.setItemText(
-                5,
-                "DEATHMATCH",
+            self.player_gamemode.addItems(
+                [
+                    "ALL",
+                    "COMPETITIVE",
+                    "UNRATED",
+                    "SPIKERUSH",
+                    "SWIFTPLAY",
+                    "DEATHMATCH",
+                ]
             )
             self.player_gamemode.setEditable(True)
             self.player_gamemode_edit = self.player_gamemode.lineEdit()
@@ -301,207 +201,122 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.player_gamemode_edit.setReadOnly(True)
             self.horizontalLayout.addWidget(self.player_gamemode)
 
-            # Create Apply, Reset Buttons
+            # Apply & Reset Buttons
             self.dialog_button = QtWidgets.QDialogButtonBox(self.player_input)
-            self.dialog_button.setEnabled(True)
             self.dialog_button.setOrientation(QtCore.Qt.Horizontal)
-            self.dialog_button.setCenterButtons(False)
-            self.dialog_button.setObjectName("dialog_button")
-
-            # Create Buttons for DialogBox
             self.get_button = QtWidgets.QPushButton("EXECUTE")
             self.get_button.setToolTip("Fetch player information")
-            self.get_button.setDefault(True)
             self.reset_button = QtWidgets.QPushButton("RESET")
             self.reset_button.setToolTip("Reset all inputs")
-            self.reset_button.setDefault(True)
             self.dialog_button.addButton(
-                self.get_button,
-                QtWidgets.QDialogButtonBox.ActionRole,
+                self.get_button, QtWidgets.QDialogButtonBox.ActionRole
             )
             self.dialog_button.addButton(
-                self.reset_button,
-                QtWidgets.QDialogButtonBox.ActionRole,
+                self.reset_button, QtWidgets.QDialogButtonBox.ActionRole
             )
-
-            # Layers
             self.horizontalLayout.addWidget(self.dialog_button)
-            self.horizontalLayout.setStretch(
-                1,
-                4,
-            )
-            self.horizontalLayout.setStretch(
-                2,
-                3,
-            )
+
+            # Stretch Settings for Inputs
+            self.horizontalLayout.setStretch(1, 4)
+            self.horizontalLayout.setStretch(2, 3)
             self.verticalLayout.addWidget(self.player_input)
 
-            # Create player Output Banner & Data etc. Frame
+            # ---------------------------------------------------------
+            # Player Information Section
+            # ---------------------------------------------------------
             self.player_information = QtWidgets.QFrame(self.home)
-            self.player_information.setEnabled(True)
-            self.player_information.setLineWidth(0)
             self.player_information.setObjectName("player_information")
-            self.horizontalLayout_2 = QtWidgets.QHBoxLayout(
-                self.player_information
-            )
-            self.horizontalLayout_2.setContentsMargins(
-                5,
-                5,
-                5,
-                5,
-            )
+            self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.player_information)
+            self.horizontalLayout_2.setContentsMargins(5, 5, 5, 5)
             self.horizontalLayout_2.setSpacing(15)
-            self.horizontalLayout_2.setObjectName("horizontalLayout_2")
 
-            # Create player Banner PixMap
+            # Player Banner
             example_banner = Path(__file__).parent.joinpath(
                 "Images\\Example\\ExampleWideBanner.png"
             )
             self.player_banner = QtWidgets.QLabel(self.player_information)
-            self.player_banner.setEnabled(True)
-            self.player_banner.setLineWidth(1)
-            self.player_banner.setText("")
             self.player_banner.setPixmap(QtGui.QPixmap(str(example_banner)))
             self.player_banner.setScaledContents(True)
             self.player_banner.setAlignment(QtCore.Qt.AlignCenter)
-            self.player_banner.setWordWrap(False)
             self.player_banner.setFrameShape(QtWidgets.QFrame.Box)
             self.player_banner.setLineWidth(0)
             self.player_banner.setObjectName("player_banner")
             self.horizontalLayout_2.addWidget(self.player_banner)
 
-            # Create player Information Frame
+            # Player Data Frame
             self.player_datas = QtWidgets.QFrame(self.player_information)
-            self.player_datas.setObjectName("player_datas")
             self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.player_datas)
-            self.verticalLayout_5.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.verticalLayout_5.setSpacing(0)
-            self.verticalLayout_5.setObjectName("verticalLayout_5")
 
-            # Create player puu-id + region
+            # Player puu-id + Region
             self.player_ids = QtWidgets.QLabel(self.player_datas)
             font = QtGui.QFont()
             font.setPointSize(15)
             self.player_ids.setFont(font)
             self.player_ids.setText("puu-ID | EU")
-            self.player_ids.setAlignment(
-                QtCore.Qt.AlignLeading
-                | QtCore.Qt.AlignLeft
-                | QtCore.Qt.AlignVCenter
-            )
-            self.player_ids.setObjectName("player_ids")
+            self.player_ids.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
             self.verticalLayout_5.addWidget(self.player_ids)
 
-            # Creating player, Add HTML Text with AccountLevel, player#Tag and rank.
+            # Player Name + Rank
             tier_icon = Path(__file__).parent.joinpath(
                 "Images\\Example\\ExampleRank.png"
             )
             self.player = QtWidgets.QLabel(self.player_datas)
-            self.player.setEnabled(True)
             font = QtGui.QFont()
             font.setPointSize(35)
             self.player.setFont(font)
             self.player.setText(
-                f'<html><head/><body><p><span style=" font-size:29pt;">player#Tag<p'
-                f'>Account Level 0 | Iron 3 </span><img src="{tier_icon}"width="32 '
-                f'"height="32"/><span style=" font-size:20pt;"> 0rr</span></p></body></html>'
+                f"<html><head/><body>"
+                f'<p><span style=" font-size:29pt;">player#Tag</span></p>'
+                f"<p>Account Level 0 | Iron 3 "
+                f'<img src="{tier_icon}" width="32" height="32"/> '
+                f'<span style=" font-size:20pt;"> 0rr</span></p>'
+                f"</body></html>"
             )
-            self.player.setTextFormat(QtCore.Qt.RichText)
-            self.player.setAlignment(
-                QtCore.Qt.AlignLeading
-                | QtCore.Qt.AlignLeft
-                | QtCore.Qt.AlignVCenter
-            )
-            self.player.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
-            self.player.setObjectName("player")
-
-            # Layer Stuff. IDC
+            self.player.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
             self.verticalLayout_5.addWidget(self.player)
+
             self.horizontalLayout_2.addWidget(self.player_datas)
             self.verticalLayout.addWidget(self.player_information)
 
-            # Creating Accuracy & Stats Frame
+            # ---------------------------------------------------------
+            # General Stats Section
+            # ---------------------------------------------------------
             self.general_stats = QtWidgets.QFrame(self.home)
-            self.general_stats.setObjectName("general_stats")
             self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.general_stats)
-            self.horizontalLayout_8.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.horizontalLayout_8.setObjectName("horizontalLayout_8")
 
-            # Creating Stats
+            # Stats Frame
             self.StatsFrame = QtWidgets.QFrame(self.general_stats)
-            self.StatsFrame.setObjectName("StatsFrame")
             self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.StatsFrame)
-            self.verticalLayout_6.setContentsMargins(
-                5,
-                0,
-                5,
-                0,
-            )
-            self.verticalLayout_6.setSpacing(0)
-            self.verticalLayout_6.setObjectName("verticalLayout_6")
 
-            # Creating Stats Title
+            # Title
             self.stats_title = QtWidgets.QLabel(self.StatsFrame)
-            font = QtGui.QFont()
-            font.setUnderline(False)
-            font.setStrikeOut(False)
-            self.stats_title.setFont(font)
             self.stats_title.setText(
-                '<html><head/><body><p><span style=" font-size:22pt;">GENERAL STATS</span><span style=" font-size:18pt; '
-                'color:#6a6a6a;"> (Last 10 Matches)</span></p></body></html> '
+                "<html><head/><body>"
+                '<p><span style=" font-size:22pt;">GENERAL STATS</span>'
+                '<span style=" font-size:18pt; color:#6a6a6a;"> (Last 10 Matches)</span></p>'
+                "</body></html>"
             )
-            self.stats_title.setTextFormat(QtCore.Qt.RichText)
             self.stats_title.setAlignment(QtCore.Qt.AlignCenter)
-            self.stats_title.setObjectName("stats_title")
             self.verticalLayout_6.addWidget(self.stats_title)
 
-            # Creating Stats for Pixmap and Info's
+            # Stats Box (Accuracy & KD etc.)
             self.g_stats = QtWidgets.QFrame(self.StatsFrame)
-            self.g_stats.setFrameShape(QtWidgets.QFrame.Box)
-            self.g_stats.setFrameShadow(QtWidgets.QFrame.Plain)
-            self.g_stats.setLineWidth(0)
-            self.g_stats.setObjectName("g_stats")
             self.horizontalLayout_9 = QtWidgets.QHBoxLayout(self.g_stats)
-            self.horizontalLayout_9.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.horizontalLayout_9.setSpacing(15)
-            self.horizontalLayout_9.setObjectName("horizontalLayout_9")
 
-            # Creating Accuracy Pixmap
+            # Accuracy Icon
             Basic = Path(__file__).parent.joinpath("Images\\Dummy\\Basic.png")
             self.accuracy_logo = QtWidgets.QLabel(self.g_stats)
-            self.accuracy_logo.setLayoutDirection(QtCore.Qt.LeftToRight)
-            self.accuracy_logo.setText("")
             self.accuracy_logo.setPixmap(QtGui.QPixmap(str(Basic)))
             self.accuracy_logo.setAlignment(QtCore.Qt.AlignCenter)
-            self.accuracy_logo.setObjectName("accuracy_logo")
             self.horizontalLayout_9.addWidget(self.accuracy_logo)
 
-            # Creating Accuracy Texts for HS Rate etc.
+            # Accuracy Text
             self.accuarcy_text = QtWidgets.QLabel(self.g_stats)
-            self.accuarcy_text.setLayoutDirection(QtCore.Qt.LeftToRight)
-            self.accuarcy_text.setText(
-                "Headshots: 0%\n" "Bodyshots: 0%\n" "Legshots: 0%"
-            )
+            self.accuarcy_text.setText("Headshots: 0%\nBodyshots: 0%\nLegshots: 0%")
             self.accuarcy_text.setAlignment(QtCore.Qt.AlignCenter)
-            self.accuarcy_text.setObjectName("accuarcy_text")
             self.horizontalLayout_9.addWidget(self.accuarcy_text)
 
-            # Creating HTML Code with K/D, Win rate and the Title in it
+            # Stats Text
             self.stats_text = QtWidgets.QLabel(self.g_stats)
             self.stats_text.setText(
                 "K/D: 0.00\n"
@@ -510,53 +325,28 @@ class Ui_ValorantTrackerByNavisGames(object):
                 "Winrate: 0%"
             )
             self.stats_text.setAlignment(QtCore.Qt.AlignCenter)
-            self.stats_text.setObjectName("stats_text")
             self.horizontalLayout_9.addWidget(self.stats_text)
+
             self.verticalLayout_6.addWidget(self.g_stats)
-
-            # Spacer Item
             self.horizontalLayout_8.addWidget(self.StatsFrame)
+            self.verticalLayout.addWidget(self.general_stats)
 
-            # Creating Stats Frame
+            # ---------------------------------------------------------
+            # Competitive & Match History Section
+            # ---------------------------------------------------------
             self.stats = QtWidgets.QFrame(self.home)
-            self.stats.setObjectName("Stats")
             self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.stats)
-            self.horizontalLayout_6.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.horizontalLayout_6.setObjectName("horizontalLayout_6")
 
-            # Creating CompetitiveStats Frame for Stats
+            # Competitive Stats
             self.comp_information = QtWidgets.QFrame(self.stats)
-            self.comp_information.setEnabled(True)
-            self.comp_information.setObjectName("comp_information")
-            self.verticalLayout_2 = QtWidgets.QVBoxLayout(
-                self.comp_information
-            )
-            self.verticalLayout_2.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.verticalLayout_2.setObjectName("verticalLayout_2")
+            self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.comp_information)
 
-            # Creating Competitive Title
             self.comp_title = QtWidgets.QLabel(self.comp_information)
-            self.comp_title.setEnabled(True)
             self.comp_title.setText("COMPETITIVE STATS")
             self.comp_title.setAlignment(QtCore.Qt.AlignCenter)
-            self.comp_title.setObjectName("comp_title")
             self.verticalLayout_2.addWidget(self.comp_title)
 
-            # Creating ScrollArea for the Field of Competitive
-            self.comp_scroll_area = QtWidgets.QScrollArea(
-                self.comp_information
-            )
-            self.comp_scroll_area.setEnabled(True)
+            self.comp_scroll_area = QtWidgets.QScrollArea(self.comp_information)
             self.comp_scroll_area.setVerticalScrollBarPolicy(
                 QtCore.Qt.ScrollBarAsNeeded
             )
@@ -564,405 +354,219 @@ class Ui_ValorantTrackerByNavisGames(object):
                 QtCore.Qt.ScrollBarAlwaysOff
             )
             self.comp_scroll_area.setWidgetResizable(True)
-            self.comp_scroll_area.setAlignment(QtCore.Qt.AlignCenter)
-            self.comp_scroll_area.setObjectName("comp_scroll_area")
-            self.comp_scroll_area.setFrameShape(QtWidgets.QFrame.Box)
-            self.comp_scroll_area.setFrameShadow(QtWidgets.QFrame.Plain)
-            self.comp_scroll_area.setLineWidth(0)
-            self.CompScrollLayout = QtWidgets.QWidget()
-            self.CompScrollLayout.setGeometry(
-                QtCore.QRect(
-                    0,
-                    0,
-                    519,
-                    355,
-                )
-            )
-            self.CompScrollLayout.setObjectName("CompScrollLayout")
-            self.horizontalLayout_3 = QtWidgets.QHBoxLayout(
-                self.CompScrollLayout
-            )
-            self.horizontalLayout_3.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.horizontalLayout_3.setObjectName("horizontalLayout_3")
 
-            # Creating Competitive history
+            self.CompScrollLayout = QtWidgets.QWidget()
+            self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.CompScrollLayout)
+
             self.comp_history = QtWidgets.QLabel(self.CompScrollLayout)
-            self.comp_history.setEnabled(True)
             font = QtGui.QFont()
             font.setPointSize(14)
             self.comp_history.setFont(font)
-            self.comp_history.setLineWidth(1)
-            self.comp_history.setWordWrap(True)
             self.comp_history.setText(
-                "Matchmaking Ratio \n"
-                "Competitive Wins \n"
-                "Competitive Games played \n"
-                "Previous Ranks \n"
-                "Rank History\n"
+                "Matchmaking Ratio\n"
+                "Competitive Wins\n"
+                "Competitive Games Played\n"
+                "Previous Ranks\n"
+                "Rank History"
             )
-            self.comp_history.setAlignment(
-                QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop
-            )
-            self.comp_history.setWordWrap(True)
-            self.comp_history.setObjectName("comp_history")
+            self.comp_history.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
             self.horizontalLayout_3.addWidget(self.comp_history)
+
             self.comp_scroll_area.setWidget(self.CompScrollLayout)
             self.verticalLayout_2.addWidget(self.comp_scroll_area)
             self.horizontalLayout_6.addWidget(self.comp_information)
 
-            # Creating Match history Frame for Stats
+            # Match History
             self.match_history = QtWidgets.QFrame(self.stats)
-            self.match_history.setEnabled(True)
-            self.match_history.setFrameShape(QtWidgets.QFrame.Box)
-            self.match_history.setFrameShadow(QtWidgets.QFrame.Plain)
-            self.match_history.setLineWidth(0)
-            self.match_history.setObjectName("match_history")
             self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.match_history)
-            self.verticalLayout_4.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.verticalLayout_4.setObjectName("verticalLayout_4")
 
-            # Creating history Title
             self.history_title = QtWidgets.QLabel(self.match_history)
-            self.history_title.setEnabled(True)
             self.history_title.setText("MATCH HISTORY")
             self.history_title.setAlignment(QtCore.Qt.AlignCenter)
-            self.history_title.setObjectName("history_title")
             self.verticalLayout_4.addWidget(self.history_title)
 
-            # Creating ScrollArea for the Field of Match history
-            self.history_scroll_area = QtWidgets.QScrollArea(
-                self.match_history
-            )
-            self.history_scroll_area.setEnabled(True)
-            self.history_scroll_area.setLineWidth(1)
+            self.history_scroll_area = QtWidgets.QScrollArea(self.match_history)
             self.history_scroll_area.setHorizontalScrollBarPolicy(
                 QtCore.Qt.ScrollBarAlwaysOff
             )
             self.history_scroll_area.setWidgetResizable(True)
-            self.history_scroll_area.setObjectName("history_scroll_area")
-            self.history_scroll_layout = QtWidgets.QWidget()
-            self.history_scroll_layout.setGeometry(
-                QtCore.QRect(
-                    0,
-                    0,
-                    519,
-                    355,
-                )
-            )
-            self.history_scroll_layout.setObjectName("history_scroll_layout")
-            self.history_scroll_area.setFrameShape(QtWidgets.QFrame.Box)
-            self.history_scroll_area.setFrameShadow(QtWidgets.QFrame.Plain)
-            self.history_scroll_area.setLineWidth(0)
-            self.horizontalLayout_4 = QtWidgets.QHBoxLayout(
-                self.history_scroll_layout
-            )
-            self.horizontalLayout_4.setObjectName("horizontalLayout_4")
 
-            # Creating match_history Text.
+            self.history_scroll_layout = QtWidgets.QWidget()
+            self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.history_scroll_layout)
+
             self.history = QtWidgets.QLabel(self.history_scroll_layout)
-            self.history.setEnabled(True)
             font = QtGui.QFont()
             font.setPointSize(14)
             self.history.setFont(font)
-            self.history.setWordWrap(True)
             self.history.setText(
                 "<html><head/><body>"
                 "Day, Date, Time<br>"
                 "Match ID<br>"
-                "region - Cluster<br>"
-                f"Map | Mode | Agent: <img src='{Path(__file__).parent.joinpath(f"Images/Agents/Jett.png")}' width='23' height='23'/> Jett<br>"
+                "Region - Cluster<br>"
+                f"Map | Mode | Agent: <img src='{Path(__file__).parent.joinpath('Images/Agents/Jett.png')}' width='23' height='23'/> Jett<br>"
                 "0-0 WON<br>"
                 "Kills Assists Deaths | 0.00 K/D<br>"
                 "HS%: 0% | ACS: 0 | ADR: 0 | Total Score: 0<br>"
                 "</body></html>"
             )
-            self.history.setAlignment(
-                QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop
-            )
-            self.history.setObjectName("history")
+            self.history.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
             self.horizontalLayout_4.addWidget(self.history)
+
             self.history_scroll_area.setWidget(self.history_scroll_layout)
             self.verticalLayout_4.addWidget(self.history_scroll_area)
             self.horizontalLayout_6.addWidget(self.match_history)
 
-            # Adding Widgets to HOME
+            # Add Competitive + Match History to Home
             self.verticalLayout.addWidget(self.stats)
-            self.verticalLayout.addWidget(self.general_stats)
 
-            # Adding home_error to find Errors better
+            # Error Label (Home Tab)
             self.home_error = QtWidgets.QLabel(self.home)
             font = QtGui.QFont()
             font.setPointSize(12)
             self.home_error.setFont(font)
             self.home_error.setText("")
-            self.home_error.setAlignment(
-                QtCore.Qt.AlignLeading
-                | QtCore.Qt.AlignLeft
-                | QtCore.Qt.AlignVCenter
-            )
             self.home_error.setWordWrap(True)
-            self.home_error.setObjectName("home_error")
             self.verticalLayout.addWidget(self.home_error)
 
             # Add HOME Tab to Tabs
-            self.tabs_left.addTab(
-                self.home,
-                "HOME",
-            )
+            self.tabs_left.addTab(self.home, "HOME")
 
-            # Creating leaderboard Tab & Layout
+            # ---------------------------------------------------------
+            # Leaderboard TAB
+            # ---------------------------------------------------------
             self.leaderboard = QtWidgets.QWidget()
             self.leaderboard.setObjectName("leaderboard")
-            self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.leaderboard)
-            self.verticalLayout_3.setContentsMargins(
-                0,
-                -1,
-                0,
-                0,
-            )
-            self.verticalLayout_3.setObjectName("verticalLayout_3")
+            layout_leaderboard = QtWidgets.QVBoxLayout(self.leaderboard)
+            layout_leaderboard.setContentsMargins(10, 10, 10, 10)
+            layout_leaderboard.setSpacing(10)
 
-            # Creating leaderboard Input Frame
+            # Leaderboard Input Card
             self.LeaderBoardInput = QtWidgets.QFrame(self.leaderboard)
             self.LeaderBoardInput.setObjectName("LeaderBoardInput")
-            self.horizontalLayout_7 = QtWidgets.QHBoxLayout(
-                self.LeaderBoardInput
-            )
-            self.horizontalLayout_7.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+            input_layout = QtWidgets.QHBoxLayout(self.LeaderBoardInput)
+            input_layout.setContentsMargins(10, 10, 10, 10)
+            input_layout.setSpacing(10)
 
-            # Creating Combo Box for all Acts
+            # Act ComboBox
             self.act = QtWidgets.QComboBox(self.LeaderBoardInput)
-            self.act.setObjectName("act")
             populate_combo_box(self.act, list(seasons.keys()))
             self.act.setCurrentText(list(seasons.keys())[0])
             self.act.setEditable(True)
-            self.horizontalLayout_7.addWidget(self.act)
             self.act_edit = self.act.lineEdit()
             self.act_edit.setAlignment(Qt.AlignCenter)
             self.act_edit.setReadOnly(True)
+            input_layout.addWidget(self.act)
 
-            # Creating leaderboard Regions
-            self.leaderboard_region = QtWidgets.QComboBox(
-                self.LeaderBoardInput
-            )
-            self.leaderboard_region.setEnabled(True)
-            self.leaderboard_region.setLayoutDirection(QtCore.Qt.LeftToRight)
-            self.leaderboard_region.setCurrentText("EU")
-            self.leaderboard_region.setMaxVisibleItems(6)
-            self.leaderboard_region.setMaxCount(6)
-            self.leaderboard_region.setDuplicatesEnabled(False)
-            self.leaderboard_region.setObjectName("leaderboard_region")
+            # Region ComboBox
+            self.leaderboard_region = QtWidgets.QComboBox(self.LeaderBoardInput)
             populate_combo_box(self.leaderboard_region, regions)
+            self.leaderboard_region.setCurrentText("EU")
             self.leaderboard_region.setEditable(True)
-            self.horizontalLayout_7.addWidget(self.leaderboard_region)
             self.leaderboard_edit = self.leaderboard_region.lineEdit()
             self.leaderboard_edit.setAlignment(Qt.AlignCenter)
             self.leaderboard_edit.setReadOnly(True)
+            input_layout.addWidget(self.leaderboard_region)
 
-            # Create player count Box
+            # Player Count SpinBox
             self.player_count = QtWidgets.QSpinBox(self.LeaderBoardInput)
-            self.player_count.setWrapping(False)
-            self.player_count.setFrame(True)
-            self.player_count.setAlignment(QtCore.Qt.AlignCenter)
-            self.player_count.setButtonSymbols(
-                QtWidgets.QAbstractSpinBox.UpDownArrows
-            )
-            self.player_count.setSpecialValueText("")
-            self.player_count.setProperty(
-                "showGroupSeparator",
-                False,
-            )
+            self.player_count.setAlignment(Qt.AlignCenter)
+            self.player_count.setButtonSymbols(QtWidgets.QAbstractSpinBox.UpDownArrows)
             self.player_count.setPrefix("Players: ")
-            self.player_count.setMinimum(1)
-            self.player_count.setMaximum(15000)
-            self.player_count.setObjectName("spinBox")
-            self.horizontalLayout_7.addWidget(self.player_count)
+            self.player_count.setRange(1, 15000)
+            input_layout.addWidget(self.player_count)
 
-            # Create Reload Button
-            self.reload_button = QtWidgets.QPushButton(self.LeaderBoardInput)
-            self.reload_button.setText("Reload")
+            # Reload Button
+            self.reload_button = QtWidgets.QPushButton("Reload", self.LeaderBoardInput)
             self.reload_button.setToolTip("Reload the leaderboard")
-            self.reload_button.setDefault(False)
-            self.reload_button.setFlat(False)
-            self.reload_button.setObjectName("Reload")
-            self.horizontalLayout_7.addWidget(self.reload_button)
-            self.verticalLayout_3.addWidget(self.LeaderBoardInput)
+            input_layout.addWidget(self.reload_button)
 
-            # Create Players Frame & ScrollArea & Layout
-            self.players = QtWidgets.QVBoxLayout()
-            self.players.setContentsMargins(
-                0,
-                0,
-                0,
-                0,
-            )
-            self.players.setObjectName("Players")
+            layout_leaderboard.addWidget(self.LeaderBoardInput)
+
+            # Players ScrollArea
             self.player_scroll_area = QtWidgets.QScrollArea(self.leaderboard)
-            self.player_scroll_area.setFrameShape(QtWidgets.QFrame.Box)
-            self.player_scroll_area.setFrameShadow(QtWidgets.QFrame.Plain)
-            self.player_scroll_area.setLineWidth(0)
-            self.player_scroll_area.setHorizontalScrollBarPolicy(
-                QtCore.Qt.ScrollBarAlwaysOff
-            )
-            self.player_scroll_area.setSizeAdjustPolicy(
-                QtWidgets.QAbstractScrollArea.AdjustIgnored
-            )
             self.player_scroll_area.setWidgetResizable(True)
-            self.player_scroll_area.setAlignment(QtCore.Qt.AlignCenter)
-            self.player_scroll_area.setObjectName("player_scroll_area")
+            self.player_scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
             self.player_scroll_area_layout = QtWidgets.QWidget()
-            self.player_scroll_area_layout.setGeometry(
-                QtCore.QRect(
-                    0,
-                    0,
-                    486,
-                    145,
-                )
-            )
-            self.player_scroll_area_layout.setObjectName(
-                "player_scroll_area_layout"
-            )
-
+            self.player_scroll_area_layout.setObjectName("player_scroll_area_layout")
             self.verticalLayout_8 = QtWidgets.QVBoxLayout(
                 self.player_scroll_area_layout
             )
-            self.verticalLayout_8.setObjectName("verticalLayout_8")
-
+            self.verticalLayout_8.setSpacing(5)
+            self.verticalLayout_8.setContentsMargins(5, 5, 5, 5)
             self.player_scroll_area.setWidget(self.player_scroll_area_layout)
-            self.players.addWidget(self.player_scroll_area)
-            self.verticalLayout_3.addLayout(self.players)
-            self.tabs_left.addTab(
-                self.leaderboard,
-                "LEADERBOARD",
-            )
 
-            # Create match_tracker Widget
+            layout_leaderboard.addWidget(self.player_scroll_area)
+            self.tabs_left.addTab(self.leaderboard, "LEADERBOARD")
+
+            # --- MATCH TRACKER TAB ---
             self.match_tracker = QtWidgets.QWidget()
             self.match_tracker.setObjectName("match_tracker")
+            layout_match = QtWidgets.QVBoxLayout(self.match_tracker)
+            layout_match.setContentsMargins(10, 10, 10, 10)
+            layout_match.setSpacing(10)
 
-            # Create Layout
-            self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.match_tracker)
-            self.verticalLayout_9.setContentsMargins(
-                5,
-                5,
-                5,
-                5,
-            )
-            self.verticalLayout_9.setObjectName("verticalLayout_9")
+            # Input Card
+            match_input_frame = QtWidgets.QFrame(self.match_tracker)
 
-            # Create MatchInputLayout
-            self.match_inputs = QtWidgets.QHBoxLayout()
-            self.match_inputs.setObjectName("match_inputs")
+            match_input_layout = QtWidgets.QHBoxLayout(match_input_frame)
+            match_input_layout.setContentsMargins(10, 10, 10, 10)
+            match_input_layout.setSpacing(10)
 
-            # Create MatchID Input
-            spacerItem2 = QtWidgets.QSpacerItem(
-                40,
-                20,
-                QtWidgets.QSizePolicy.Expanding,
-                QtWidgets.QSizePolicy.Minimum,
-            )
-            self.match_inputs.addItem(spacerItem2)
-            self.match_id_input = QtWidgets.QLineEdit(self.match_tracker)
-            self.match_id_input.setInputMask("")
-            self.match_id_input.setText("")
+            # MatchID Input
+            self.match_id_input = QtWidgets.QLineEdit(match_input_frame)
             self.match_id_input.setMaxLength(36)
             self.match_id_input.setAlignment(QtCore.Qt.AlignCenter)
-            self.match_id_input.setObjectName("match_id_input")
-            self.match_id_input.setPlaceholderText(
-                "ENTER MATCH ID (36 characters)"
-            )
-            self.match_inputs.addWidget(self.match_id_input)
+            self.match_id_input.setPlaceholderText("ENTER MATCH ID (36 characters)")
+            match_input_layout.addWidget(self.match_id_input)
 
-            # Create Execute Button
-            self.execute_button = QtWidgets.QPushButton(self.match_tracker)
-            self.execute_button.setText("EXECUTE")
+            # Execute Button
+            self.execute_button = QtWidgets.QPushButton("EXECUTE", match_input_frame)
             self.execute_button.setToolTip("Fetch match information")
-            self.execute_button.setObjectName("execute_button")
-            self.match_inputs.addWidget(self.execute_button)
+            match_input_layout.addWidget(self.execute_button)
+
+            layout_match.addWidget(match_input_frame)
+
+            # Title Label
+            self.MatchInformations = QtWidgets.QLabel(self.match_tracker)
+            title_font = QtGui.QFont()
+            title_font.setPointSize(18)
+            title_font.setBold(True)
+            self.MatchInformations.setFont(title_font)
+            self.MatchInformations.setText("MATCH INFORMATION")
+            self.MatchInformations.setAlignment(QtCore.Qt.AlignCenter)
+            layout_match.addWidget(self.MatchInformations)
 
             # Spacer
-            spacerItem3 = QtWidgets.QSpacerItem(
-                40,
-                20,
-                QtWidgets.QSizePolicy.Expanding,
-                QtWidgets.QSizePolicy.Minimum,
+            layout_match.addItem(
+                QtWidgets.QSpacerItem(
+                    20,
+                    40,
+                    QtWidgets.QSizePolicy.Minimum,
+                    QtWidgets.QSizePolicy.Expanding,
+                )
             )
-            self.match_inputs.addItem(spacerItem3)
-            self.verticalLayout_9.addLayout(self.match_inputs)
 
-            # Create Match Informations
-            self.MatchInformations = QtWidgets.QLabel(self.match_tracker)
-            font = QtGui.QFont()
-            font.setPointSize(14)
-            self.MatchInformations.setFont(font)
-            self.MatchInformations.setTextFormat(QtCore.Qt.RichText)
-            self.MatchInformations.setText(
-                "<html><head/><body><p><span style=' font-size:22pt;'>MATCH INFORMATION</span></p></body></html>"
-            )
-            self.MatchInformations.setAlignment(QtCore.Qt.AlignCenter)
-            self.MatchInformations.setObjectName("MatchInformations")
-            self.verticalLayout_9.addWidget(self.MatchInformations)
-
-            # Add Widget & Layout stuff
-            spacerItem2 = QtWidgets.QSpacerItem(
-                20,
-                40,
-                QtWidgets.QSizePolicy.Minimum,
-                QtWidgets.QSizePolicy.Expanding,
-            )
-            self.verticalLayout_9.addItem(spacerItem2)
-            spacerItem4 = QtWidgets.QSpacerItem(
-                20,
-                40,
-                QtWidgets.QSizePolicy.Minimum,
-                QtWidgets.QSizePolicy.Expanding,
-            )
-            self.verticalLayout_9.addItem(spacerItem4)
-
-            # Create Match Error
+            # Error Label
             self.match_error = QtWidgets.QLabel(self.match_tracker)
-            font = QtGui.QFont()
-            font.setPointSize(12)
-            self.match_error.setFont(font)
-            self.match_error.setText("")
+            error_font = QtGui.QFont()
+            error_font.setPointSize(12)
+            self.match_error.setFont(error_font)
+            self.match_error.setStyleSheet("color: red;")
+            self.match_error.setAlignment(QtCore.Qt.AlignCenter)
             self.match_error.setWordWrap(True)
-            self.match_error.setObjectName("match_error")
-            self.verticalLayout_9.addWidget(self.match_error)
+            layout_match.addWidget(self.match_error)
 
-            # Index, Layout, adding Match Tracker
             self.tabs_left.addTab(self.match_tracker, "MATCH")
-            self.horizontalLayout_main.addWidget(self.tabs_left)
 
-            # Creating Tabs for right side
+            # --- RIGHT SIDE TABS ---
             self.tabs_right = QtWidgets.QTabWidget(self.centralwidget)
-            self.tabs_right.setEnabled(True)
-            self.tabs_right.setFocusPolicy(QtCore.Qt.NoFocus)
-            self.tabs_right.setLayoutDirection(QtCore.Qt.LeftToRight)
             self.tabs_right.setTabPosition(QtWidgets.QTabWidget.North)
             self.tabs_right.setTabShape(QtWidgets.QTabWidget.Rounded)
-            self.tabs_right.setElideMode(QtCore.Qt.ElideNone)
-            self.tabs_right.setUsesScrollButtons(False)
-            self.tabs_right.setDocumentMode(False)
-            self.tabs_right.setTabsClosable(False)
             self.tabs_right.setMovable(False)
-            self.tabs_right.setTabBarAutoHide(False)
             self.tabs_right.setObjectName("TabsRight")
+
+            self.horizontalLayout_main.addWidget(self.tabs_left)
+            self.horizontalLayout_main.addWidget(self.tabs_right)
 
             # Create Dicts with Bundles and use Valorant API to get all current bundles
             try:
@@ -974,19 +578,16 @@ class Ui_ValorantTrackerByNavisGames(object):
                 current_Bundle = []
             self.bundle = dict()
 
-            for (
-                i,
-                bundles,
-            ) in enumerate(current_Bundle):
-                bundleUuid = current_Bundle[i].bundle_uuid
+            for i, bundles in enumerate(current_Bundle):
+                bundleUuid = bundles.bundle_uuid
 
-                # Getting Bundle Banner as PixMap
+                # Get bundle JSON and banner
                 bundleJson = fetch_url(
                     f"https://valorant-api.com/v1/bundles/{bundleUuid}"
                 ).json()
                 img = await get_image_async(bundleJson["data"]["displayIcon2"])
 
-                # Resize the image to fit within a specific size
+                # Resize the banner image
                 max_width = 400
                 max_height = 200
                 img = img.scaled(
@@ -996,113 +597,102 @@ class Ui_ValorantTrackerByNavisGames(object):
                     QtCore.Qt.SmoothTransformation,
                 )
 
-                # Creating Bundle
+                # ---------------------------------------------------------
+                # Bundle TAB
+                # ---------------------------------------------------------
                 self.bundle[i] = QtWidgets.QWidget()
                 self.bundle[i].setObjectName("Bundle")
-                self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.bundle[i])
-                self.verticalLayout_10.setContentsMargins(
-                    0,
-                    0,
-                    0,
-                    0,
-                )
-                self.verticalLayout_10.setSpacing(0)
-                self.verticalLayout_10.setObjectName("verticalLayout_10")
+                layout_bundle = QtWidgets.QVBoxLayout(self.bundle[i])
+                layout_bundle.setContentsMargins(10, 10, 10, 10)
+                layout_bundle.setSpacing(0)
 
-                # Creating Bundle MainFrame
+                # Main Frame as Card
                 self.bundle_main = QtWidgets.QFrame(self.bundle[i])
                 self.bundle_main.setObjectName("BundleMain")
-                self.verticalLayout_11 = QtWidgets.QVBoxLayout(
-                    self.bundle_main
-                )
-                self.verticalLayout_11.setContentsMargins(
-                    0,
-                    0,
-                    0,
-                    0,
-                )
-                self.verticalLayout_11.setSpacing(0)
-                self.verticalLayout_11.setObjectName("verticalLayout_11")
+                layout_main = QtWidgets.QVBoxLayout(self.bundle_main)
+                layout_main.setContentsMargins(10, 10, 10, 10)
+                layout_main.setSpacing(10)
 
-                # Creating Bundle Banner
+                # Banner
                 self.bundle_banner = QtWidgets.QLabel(self.bundle_main)
-                self.bundle_banner.setMinimumSize(
-                    QtCore.QSize(
-                        1,
-                        1,
-                    )
-                )
-                self.bundle_banner.setMaximumSize(
-                    QtCore.QSize(
-                        234234,
-                        234234,
-                    )
-                )
-                font = QtGui.QFont()
-                font.setKerning(True)
-                self.bundle_banner.setFont(font)
-                self.bundle_banner.setAutoFillBackground(False)
-                self.bundle_banner.setText("")
                 self.bundle_banner.setPixmap(QtGui.QPixmap(img))
-                self.bundle_banner.setScaledContents(False)
                 self.bundle_banner.setAlignment(QtCore.Qt.AlignCenter)
-                self.bundle_banner.setWordWrap(False)
-                self.bundle_banner.setObjectName("BundleBanner")
                 self.bundle_banner.setSizePolicy(
-                    QtWidgets.QSizePolicy.Ignored,
-                    QtWidgets.QSizePolicy.Ignored,
+                    QtWidgets.QSizePolicy.Expanding,
+                    QtWidgets.QSizePolicy.Fixed,
                 )
-                self.bundle_banner.setAlignment(QtCore.Qt.AlignCenter)
-                self.verticalLayout_11.addWidget(self.bundle_banner)
+                self.bundle_banner.setStyleSheet("border-radius: 8px;")
+                layout_main.addWidget(self.bundle_banner)
 
-                # Create Bundle prices
+                # Separator
+                line = QtWidgets.QFrame()
+                line.setFrameShape(QtWidgets.QFrame.HLine)
+                line.setFrameShadow(QtWidgets.QFrame.Sunken)
+                layout_main.addWidget(line)
+
+                # Prices
                 self.bundle_prices = QtWidgets.QLabel(self.bundle_main)
                 self.bundle_prices.setAlignment(QtCore.Qt.AlignCenter)
-                self.bundle_prices.setObjectName("BundlePrices")
-                self.verticalLayout_11.addWidget(self.bundle_prices)
+                self.bundle_prices.setWordWrap(True)
+                layout_main.addWidget(self.bundle_prices)
 
-                # Create Seconds Remaining in Shop
+                # Spacer
+                layout_main.addItem(
+                    QtWidgets.QSpacerItem(
+                        20,
+                        40,
+                        QtWidgets.QSizePolicy.Minimum,
+                        QtWidgets.QSizePolicy.Expanding,
+                    )
+                )
+
+                # Footer: Remaining Time
                 self.bundle_last = QtWidgets.QLabel(self.bundle_main)
                 font = QtGui.QFont()
                 font.setPointSize(15)
+                font.setBold(True)
                 self.bundle_last.setFont(font)
                 self.bundle_last.setAlignment(QtCore.Qt.AlignCenter)
-                self.bundle_last.setObjectName("BundleLast")
-                self.verticalLayout_11.addWidget(self.bundle_last)
-                self.verticalLayout_10.addWidget(self.bundle_main)
+                self.bundle_last.setStyleSheet("color: red;")
+                layout_main.addWidget(self.bundle_last)
 
-                # Get every item and set a string (before a list!)
-                prices = [
-                    f"Bundle Price - {current_Bundle[i].bundle_price} Valorant Points<br>"
-                ]
-                for item in current_Bundle[i].items:
+                # Add main frame into bundle widget
+                layout_bundle.addWidget(self.bundle_main)
+
+                # Collect item prices
+                prices = [f"Bundle Price - {bundles.bundle_price} Valorant Points<br>"]
+                for item in bundles.items:
                     if item.amount > 1:
                         if item.discounted_price == 0:
                             prices.append(
-                                f"{item.amount}x {item.name} - {item.base_price} VP <span style='font-size:small;'>(Free if bought as a whole Bundle)</span><br>"
+                                f"{item.amount}x {item.name} - {item.base_price} VP "
+                                f"<span style='font-size:small;'>(Free if bought as a whole Bundle)</span><br>"
                             )
                         else:
                             prices.append(
-                                f"{item.amount}x {item.name} - {item.base_price} VP <span style='font-size:small;'> ({item.discounted_price} VP if bought as whole Bundle)<br>"
+                                f"{item.amount}x {item.name} - {item.base_price} VP "
+                                f"<span style='font-size:small;'>({item.discounted_price} VP if bought as whole Bundle)</span><br>"
                             )
                     else:
                         if item.discounted_price == 0:
                             prices.append(
-                                f"{item.name} - {item.base_price} VP <span style='font-size:small;'>(Free if bought as a whole Bundle)</span><br>"
+                                f"{item.name} - {item.base_price} VP "
+                                f"<span style='font-size:small;'>(Free if bought as a whole Bundle)</span><br>"
                             )
                         else:
                             prices.append(
-                                f"{item.name} - {item.base_price} VP <span style='font-size:small;'> ({item.discounted_price} VP if bought as whole Bundle)<br>"
+                                f"{item.name} - {item.base_price} VP "
+                                f"<span style='font-size:small;'>({item.discounted_price} VP if bought as whole Bundle)</span><br>"
                             )
                 prices = "".join(prices)
 
-                # Set Texts
+                # Set texts
                 self.bundle_prices.setText(prices)
                 self.bundle_last.setText(
-                    f"<span style='color:red;'>Bundle remaining in Shop: {display_time(bundles.seconds_remaining, 3)}</span>"
+                    f"Bundle remaining in Shop: {display_time(bundles.seconds_remaining, 3)}"
                 )
 
-                # Add Bundles
+                # Add as Tab
                 self.tabs_right.addTab(
                     self.bundle[i],
                     f"{bundleJson['data']['displayName'].upper()}",
@@ -1222,9 +812,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.player_ids.setText(f"{puuid} | {region}")
 
             # Creates List with mmr, Comp Wins, Comp Games
-            rank_icon = Path(__file__).parent.joinpath(
-                f"Images/Ranks/{rank}.png"
-            )
+            rank_icon = Path(__file__).parent.joinpath(f"Images/Ranks/{rank}.png")
             peak_rank_icon = Path(__file__).parent.joinpath(
                 f"Images/Ranks/{peak_rank}.png"
             )
@@ -1319,8 +907,7 @@ class Ui_ValorantTrackerByNavisGames(object):
 
                 # Get Agent of player
                 get_agent = {
-                    player.name: player.character
-                    for player in players.all_players
+                    player.name: player.character for player in players.all_players
                 }.get(Details.name)
 
                 # Get Agent image from local file
@@ -1497,12 +1084,8 @@ class Ui_ValorantTrackerByNavisGames(object):
             bodyshot_dummy = Path(__file__).parent.joinpath(
                 "Images\\Dummy\\Bodyshot.png"
             )
-            legshot_dummy = Path(__file__).parent.joinpath(
-                "Images\\Dummy\\Legshot.png"
-            )
-            basic_dummy = Path(__file__).parent.joinpath(
-                "Images\\Dummy\\Basic.png"
-            )
+            legshot_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Legshot.png")
+            basic_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Basic.png")
 
             # Set Rates with Math
             if self.player_gamemode.currentText() != "DEATHMATCH":
@@ -1523,31 +1106,14 @@ class Ui_ValorantTrackerByNavisGames(object):
 
                 # Set Dummy Prior
 
-                if (
-                    headshot_rate > bodyshot_rate
-                    and headshot_rate > legshot_rate
-                ):
-                    self.accuracy_logo.setPixmap(
-                        QtGui.QPixmap(str(headshot_dummy))
-                    )
-                elif (
-                    bodyshot_rate > headshot_rate
-                    and bodyshot_rate > legshot_rate
-                ):
-                    self.accuracy_logo.setPixmap(
-                        QtGui.QPixmap(str(bodyshot_dummy))
-                    )
-                elif (
-                    legshot_rate > headshot_rate
-                    and legshot_rate > bodyshot_rate
-                ):
-                    self.accuracy_logo.setPixmap(
-                        QtGui.QPixmap(str(legshot_dummy))
-                    )
+                if headshot_rate > bodyshot_rate and headshot_rate > legshot_rate:
+                    self.accuracy_logo.setPixmap(QtGui.QPixmap(str(headshot_dummy)))
+                elif bodyshot_rate > headshot_rate and bodyshot_rate > legshot_rate:
+                    self.accuracy_logo.setPixmap(QtGui.QPixmap(str(bodyshot_dummy)))
+                elif legshot_rate > headshot_rate and legshot_rate > bodyshot_rate:
+                    self.accuracy_logo.setPixmap(QtGui.QPixmap(str(legshot_dummy)))
                 else:
-                    self.accuracy_logo.setPixmap(
-                        QtGui.QPixmap(str(basic_dummy))
-                    )
+                    self.accuracy_logo.setPixmap(QtGui.QPixmap(str(basic_dummy)))
             else:
                 headshot_rate = "-"
                 bodyshot_rate = "-"
@@ -1556,9 +1122,7 @@ class Ui_ValorantTrackerByNavisGames(object):
 
             # Gets the current rank AS TIER INDEX (int) and compares it with the index data, to get the RANK IMAGE
             tier_index = RankDetails.current_data.currenttier
-            data = fetch_url(
-                "https://valorant-api.com/v1/competitivetiers"
-            ).json()
+            data = fetch_url("https://valorant-api.com/v1/competitivetiers").json()
             tiers = data["data"][-1]["tiers"]
             tier = None
 
@@ -1572,14 +1136,10 @@ class Ui_ValorantTrackerByNavisGames(object):
                 tier = "UNRANKED"
 
             # Gets the PNG for the HTML Rich Text
-            tier_icon = Path(__file__).parent.joinpath(
-                f"Images/Ranks/{tier}.png"
-            )
+            tier_icon = Path(__file__).parent.joinpath(f"Images/Ranks/{tier}.png")
 
             # Add Texts
-            self.history.setText(
-                match_history
-            )  # <- List which got made to a string
+            self.history.setText(match_history)  # <- List which got made to a string
             self.accuarcy_text.setText(
                 f"Headshots: {headshot_rate}%<br>"
                 f"Bodyshots: {bodyshot_rate}%<br>"
@@ -1655,11 +1215,9 @@ class Ui_ValorantTrackerByNavisGames(object):
                             self.player_scroll_area_layout
                         )
                         self.leaderboard_player[i].setEnabled(True)
-                        self.leaderboard_player[i].setObjectName(
-                            "PlayerTemplate"
-                        )
-                        self.leaderboard_player_layout[i] = (
-                            QtWidgets.QHBoxLayout(self.leaderboard_player[i])
+                        self.leaderboard_player[i].setObjectName("PlayerTemplate")
+                        self.leaderboard_player_layout[i] = QtWidgets.QHBoxLayout(
+                            self.leaderboard_player[i]
                         )
                         self.leaderboard_player_layout[i].setContentsMargins(
                             0,
@@ -1682,17 +1240,15 @@ class Ui_ValorantTrackerByNavisGames(object):
                         self.leaderboard_player_banner[i].setPixmap(
                             QtGui.QPixmap(str(example_banner))
                         )
-                        self.leaderboard_player_banner[i].setScaledContents(
-                            False
-                        )
+                        self.leaderboard_player_banner[i].setScaledContents(False)
                         self.leaderboard_player_banner[i].setObjectName(
                             "leaderboard_player_banner"
                         )
                         self.leaderboard_player_layout[i].addWidget(
                             self.leaderboard_player_banner[i]
                         )
-                        self.leaderboard_player_information[i] = (
-                            QtWidgets.QLabel(self.leaderboard_player[i])
+                        self.leaderboard_player_information[i] = QtWidgets.QLabel(
+                            self.leaderboard_player[i]
                         )
 
                         # Get LeaderboardPlayers rank, watching out if Episode is under 5
@@ -1724,20 +1280,16 @@ class Ui_ValorantTrackerByNavisGames(object):
                             self.leaderboard_player_information[i]
                         )
 
-                        self.leaderboard_player_spacer[i] = (
-                            QtWidgets.QSpacerItem(
-                                40,
-                                20,
-                                QtWidgets.QSizePolicy.Expanding,
-                                QtWidgets.QSizePolicy.Minimum,
-                            )
+                        self.leaderboard_player_spacer[i] = QtWidgets.QSpacerItem(
+                            40,
+                            20,
+                            QtWidgets.QSizePolicy.Expanding,
+                            QtWidgets.QSizePolicy.Minimum,
                         )
                         self.leaderboard_player_layout[i].addItem(
                             self.leaderboard_player_spacer[i]
                         )
-                        self.verticalLayout_8.addWidget(
-                            self.leaderboard_player[i]
-                        )
+                        self.verticalLayout_8.addWidget(self.leaderboard_player[i])
 
                         # Getting players banner and add it to player_cards
                         player_card = f"https://media.valorant-api.com/playercards/{x.PlayerCardID}/smallart.png"
@@ -1759,9 +1311,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             # Get & Set Banner
             items = list(player_cards.items())  # [(idx, url), ...]
             with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
-                responses = list(
-                    ex.map(lambda pair: fetch_url(pair[1]), items)
-                )
+                responses = list(ex.map(lambda pair: fetch_url(pair[1]), items))
 
             for (idx, _url), resp in zip(items, responses):
                 if not resp or not resp.ok:
@@ -1773,15 +1323,11 @@ class Ui_ValorantTrackerByNavisGames(object):
                 img.loadFromData(resp.content)
                 self.leaderboard_player_banner[idx].setPixmap(QPixmap(img))
 
-            logging.info(
-                f"LEADERBOARD took --- {time.time() - start_time} seconds ---"
-            )
+            logging.info(f"LEADERBOARD took --- {time.time() - start_time} seconds ---")
             self.update_loading_bar(100)  # Update loading bar to 100%
 
         except Exception as error:
-            logging.error(
-                f"Error fetching leaderboard: {traceback.format_exc()}"
-            )
+            logging.error(f"Error fetching leaderboard: {traceback.format_exc()}")
             self.home_error.setText(f"Error: {error}")
             self.update_loading_bar(0)  # Reset loading bar on error
 
@@ -1793,9 +1339,7 @@ class Ui_ValorantTrackerByNavisGames(object):
         self.update_loading_bar(10)  # Update loading bar to 10%
         try:
             # Get Match Details
-            Match = valo_api.get_match_details_v2(
-                match_id=self.match_id_input.text()
-            )
+            Match = valo_api.get_match_details_v2(match_id=self.match_id_input.text())
 
             # Variables
             match_id = Match.metadata.matchid
@@ -1912,9 +1456,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.update_loading_bar(100)  # Update loading bar to 100%
 
         except Exception as error:
-            logging.error(
-                f"Error fetching match information: {traceback.format_exc()}"
-            )
+            logging.error(f"Error fetching match information: {traceback.format_exc()}")
             self.match_error.setText(f"Error: {error}")
             self.update_loading_bar(0)  # Reset loading bar on error
 
@@ -1931,9 +1473,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             example_banner = Path(__file__).parent.joinpath(
                 "Images\\Example\\ExampleWideBanner.png"
             )
-            basic_dummy = Path(__file__).parent.joinpath(
-                "Images\\Dummy\\Basic.png"
-            )
+            basic_dummy = Path(__file__).parent.joinpath("Images\\Dummy\\Basic.png")
             self.player_name.setText("")
             self.player_name.setPlaceholderText("PLAYER NAME (16 characters)")
             self.player_tag.setText("")
@@ -1985,9 +1525,7 @@ class Ui_ValorantTrackerByNavisGames(object):
             self.update_loading_bar(100)  # Update loading bar to 100%
 
         except Exception as error:
-            logging.error(
-                f"Error resetting information: {traceback.format_exc()}"
-            )
+            logging.error(f"Error resetting information: {traceback.format_exc()}")
             self.update_loading_bar(0)  # Reset loading bar on error
 
     def modeSwitch(self) -> None:
