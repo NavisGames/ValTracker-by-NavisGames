@@ -1,4 +1,4 @@
-aiohttp==3.12.15
+aiohttp==3.13.0
 httpx==0.28.1
 PyQt5==5.15.11
 requests==2.32.5
